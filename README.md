@@ -13,16 +13,16 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/kaashifhamid/HK-IP-Camera-Settings-Dahua/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/kaashifhamid/HK-IP-Camera-Settings-Dahua?label=latest&color=1f3864"></a>
+  <a href="https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/kaashifhamid/HKs-IP-Camera-Settings-Dahua?label=latest&color=1f3864"></a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%2010%20%2F%2011%20(x64)-2b4c87">
-  <a href="https://github.com/kaashifhamid/HK-IP-Camera-Settings-Dahua/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/kaashifhamid/HK-IP-Camera-Settings-Dahua/total?color=22c55e"></a>
+  <a href="https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/kaashifhamid/HKs-IP-Camera-Settings-Dahua/total?color=22c55e"></a>
 </p>
 
 ---
 
 ## ⬇️ Download
 
-Current version: **1.4.2**. Go to the **[Releases page](https://github.com/kaashifhamid/HK-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.4.2**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
@@ -194,7 +194,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.4.2_x64.exe -Algorithm SHA256
 
 ## 💬 Feedback
 
-Found a problem or have an idea? Please open an **[Issue](https://github.com/kaashifhamid/HK-IP-Camera-Settings-Dahua/issues)** and include the version number (shown in the window title) and, if possible, the relevant lines from the log file.
+Found a problem or have an idea? Please open an **[Issue](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/issues)** and include the version number (shown in the window title) and, if possible, the relevant lines from the log file.
 
 ---
 
