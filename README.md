@@ -1,4 +1,4 @@
-<!-- Screenshots: upload your images to docs/screenshots/ and your logo to docs/logo.png (file names are listed in the Screenshots section). -->
+<!-- Images to upload: docs/logo.png, docs/screenshots/light-mode.png, docs/screenshots/dark-mode.png, docs/screenshots/settings.png -->
 
 <p align="center">
   <img src="docs/logo.png" alt="HK's IP Camera Settings (Dahua) logo" width="120">
@@ -16,10 +16,6 @@
   <a href="https://github.com/kaashifhamid/HK-IP-Camera-Settings-Dahua/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/kaashifhamid/HK-IP-Camera-Settings-Dahua?label=latest&color=1f3864"></a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%2010%20%2F%2011%20(x64)-2b4c87">
   <a href="https://github.com/kaashifhamid/HK-IP-Camera-Settings-Dahua/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/kaashifhamid/HK-IP-Camera-Settings-Dahua/total?color=22c55e"></a>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/01-main-window.png" alt="Main window" width="900">
 </p>
 
 ---
@@ -85,13 +81,17 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 ## 🖼️ Screenshots
 
-<!-- Upload your screenshots to docs/screenshots/ with exactly these names (or change the links). -->
-
-| | |
+| Light mode | Dark mode |
 |---|---|
-| ![Main window – light](docs/screenshots/01-main-window.png)<br>**Scan, login and results** | ![Dark mode](docs/screenshots/02-dark-mode.png)<br>**Dark mode** |
-| ![Settings page](docs/screenshots/03-settings.png)<br>**Choose the visible fields** | ![Snapshot example](docs/screenshots/04-snapshot.jpg)<br>**Snapshot with camera name** |
-| ![Excel export](docs/screenshots/05-excel-export.png)<br>**Excel export** | ![Time sync](docs/screenshots/06-time-sync.png)<br>**Live clock & time sync** |
+| ![Light mode](docs/screenshots/light-mode.png) | ![Dark mode](docs/screenshots/dark-mode.png) |
+
+Switch between the two with the sun / moon switch in the top-right corner of the window.
+
+**Settings page** – choose which fields are shown in the device table, whether the Excel export uses only the visible fields, and where snapshots are saved:
+
+<p align="center">
+  <img src="docs/screenshots/settings.png" alt="Settings page" width="800">
+</p>
 
 ---
 
