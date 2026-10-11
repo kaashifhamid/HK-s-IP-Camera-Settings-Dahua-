@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.4.3**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.5.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.4.3_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.4.3_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.5.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.5.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -71,11 +71,18 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **8. Excel export** – one row per camera channel, plus a *Scan Info* sheet that documents the scan. Choose whether to export all fields or only the visible ones.
 
-**9. Comfort**
+**9. Edit a camera's names** – select one camera and click **Edit Camera...** (or right-click → *Edit camera name...*) to change its **on-screen camera name** and its **device name**. Each change is read back from the camera to confirm it, and the old and new values are written to the log.
+
+**10. Stream settings in bulk** – tick any number of cameras and click **Stream Settings...** to change the **resolution, FPS, bitrate, codec, CBR/VBR and GOP** of the **main stream and sub streams 1–3** at once.
+- A **preview** compares your values with what each camera supports (resolutions, maximum FPS, bitrate range) and shows exactly what will change. Values a camera cannot take are marked in red with the reason, and nothing is written until you click **Apply**.
+- After writing, every value is **read back** from the camera; if a camera adjusts a value, you see what it stored instead.
+- **Undo last change** restores the previous values.
+
+**11. Comfort**
 - **Settings page** to choose which fields are shown in the table.
 - **Dark mode** with an animated switch.
 - Tick boxes with *Select all / Deselect all*, resizable columns, centered table.
-- **Everything is logged** to a daily log file, also after the app is closed.
+- **Everything is logged** to a daily log file, also after the app is closed – including every failed request with the camera's reply, a session ID, information about the PC, and a crash log. A **diagnostic bundle** (logs + settings + PC information, no passwords) can be saved from *Settings* in one click, and *Detailed logging* can record every request when a problem is being investigated.
 
 ---
 
@@ -112,6 +119,8 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 | **🌐 Open Web** | Opens the web pages of the ticked / selected cameras |
 | **🕒 Sync PC Time** | Sets the ticked cameras' clock to your PC time |
 | **Export Excel** | Saves the ticked cameras to an `.xlsx` file |
+| **Edit Camera...** | Changes the camera name and device name of one camera |
+| **Stream Settings...** | Changes resolution, FPS, bitrate, codec, CBR/VBR and GOP of the main / sub streams of the ticked cameras (with preview and undo) |
 
 **Tips**
 - Tick boxes decide what is exported, photographed or synchronised.
@@ -126,6 +135,8 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 |---|---|
 | Logs (daily files, kept 90 days) | `%APPDATA%\HK_IP_Camera_Settings\logs` – open it with the **📁 Logs** button |
 | Settings | `%APPDATA%\HK_IP_Camera_Settings\settings.json` |
+| Crash log | `%APPDATA%\HK_IP_Camera_Settings\logs\crash.log` |
+| Diagnostic bundle | **⚙ Settings → Save diagnostic bundle...** (a zip with logs, settings without the user name, and PC information – no passwords) |
 | Portable version | the `data` folder next to `HK_IP_Camera_Settings.exe` (because of the included `portable.txt`) |
 
 The installer's uninstaller **keeps** your logs and settings.
@@ -136,8 +147,8 @@ The installer's uninstaller **keeps** your logs and settings.
 
 - The program talks **only to the cameras on your own network**. It sends no data to the internet and has no telemetry.
 - The **password is never saved** – not in the settings file and not in the log.
-- The program is **read-only** except for the two actions you start yourself: **Sync PC Time** (changes the camera clock) and **Snapshot** (reads an image).
-- Logs contain device information (IP, model, serial number, firmware). Keep that in mind before sharing a log file.
+- The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
+- Logs and diagnostic bundles contain device information (IP, model, serial number, firmware) but **never passwords**. Keep that in mind before sharing them.
 
 ---
 
@@ -150,6 +161,7 @@ The installer's uninstaller **keeps** your logs and settings.
 | No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges*), and the ports match the cameras' HTTP port. |
 | A device is missing from the table | NVRs/DVRs and non-Dahua devices are not listed as cameras. They appear with the reason in the Excel *Scan Info* sheet. |
 | *Sync PC Time*: **clock still off** | The camera accepted the new time but its clock did not move. The message in the log tells the likely reason: **NTP enabled** on the camera (check the NTP server / time zone), or the camera is kept in time by an **NVR / recorder** (check the NVR's time-sync option). Run *Sync PC Time* again for those cameras. |
+| *Stream Settings*: a value is marked red or "adjusted" | Red = the camera does not support that value (resolution list, maximum FPS and bitrate range are checked per camera) – the reason is shown. "Adjusted" = the camera accepted the change but stored a different value; the table shows what it kept. Cameras recorded by an NVR may be controlled by the NVR – try one camera first. |
 | Excel export or the snapshot folder window does not open | Some PCs cannot show the standard Windows file dialog. The app then uses its own dialog, or saves automatically to `Documents\HK IP Camera Settings` (Excel) or the snapshot folder from *Settings*, and says so in the log. |
 | Snapshot has a different size than the main stream | The snapshot comes from the camera's snapshot function; some models use another resolution. |
 | Windows warns when starting | See [First start: Windows SmartScreen](#first-start-windows-smartscreen). |
@@ -161,15 +173,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.4.3_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.5.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.4.3**
+**Version 1.5.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.4.3_x64.exe` | `d255de1f7c1be735f9eddec168eaf9646b8d0317a60998383c9582c200876a11` |
-| `HK_IP_Camera_Settings_Portable_1.4.3_x64.zip` | `c46d29568c8050e6575bce8a28fc6e9cd969b632e315a50b544abb7fce2a11b5` |
+| `HK_IP_Camera_Settings_Setup_1.5.0_x64.exe` | `8e87380840384528c3d0f87a4faaa9011a64644bb5d16d07f4c416692826468a` |
+| `HK_IP_Camera_Settings_Portable_1.5.0_x64.zip` | `54d1622c593eafcb43e7fe6a3697c115815d813b22efc76fa4131e6f8c951aa9` |
 
 ---
 
@@ -177,6 +189,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.4.3_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.5.0** | **New:** edit a camera's name and device name; **bulk stream settings** (resolution, FPS, bitrate, codec, CBR/VBR, GOP for main and sub streams) with capability check, preview, read-back and undo; **more detailed logs** (failed requests with the camera's reply, session ID, PC information, crash log, optional full request trace) and a one-click **diagnostic bundle**. |
 | **1.4.3** | **Fixes:** Excel export and snapshot folder now work even when Windows cannot open its file dialog ("Unspecified error"). *Sync PC Time* now reads the clock back several times, retries once and shows the real reason when a camera keeps its old time. |
 | **1.4.2** | Native 64-bit program and 64-bit installer, portable x64 package. |
 | **1.4.1** | Traffic (ITC) cameras recognised; *Sync PC Time* now verifies the result and explains NTP cameras; new fields: time zone, NTP enabled / server / tolerance. |
