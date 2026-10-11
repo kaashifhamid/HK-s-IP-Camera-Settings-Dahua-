@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.4.2**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.4.3**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.4.2_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.4.2_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.4.3_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.4.3_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -149,7 +149,8 @@ The installer's uninstaller **keeps** your logs and settings.
 | A camera shows **Access refused (HTTP 403)** | The account is most likely **locked** after failed logins. Wait about 30 minutes or restart the camera, then try again. |
 | No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges*), and the ports match the cameras' HTTP port. |
 | A device is missing from the table | NVRs/DVRs and non-Dahua devices are not listed as cameras. They appear with the reason in the Excel *Scan Info* sheet. |
-| *Sync PC Time*: **clock still off** | The camera probably has **NTP enabled** and follows its own time server. Check the NTP server / time zone on the camera. |
+| *Sync PC Time*: **clock still off** | The camera accepted the new time but its clock did not move. The message in the log tells the likely reason: **NTP enabled** on the camera (check the NTP server / time zone), or the camera is kept in time by an **NVR / recorder** (check the NVR's time-sync option). Run *Sync PC Time* again for those cameras. |
+| Excel export or the snapshot folder window does not open | Some PCs cannot show the standard Windows file dialog. The app then uses its own dialog, or saves automatically to `Documents\HK IP Camera Settings` (Excel) or the snapshot folder from *Settings*, and says so in the log. |
 | Snapshot has a different size than the main stream | The snapshot comes from the camera's snapshot function; some models use another resolution. |
 | Windows warns when starting | See [First start: Windows SmartScreen](#first-start-windows-smartscreen). |
 
@@ -160,15 +161,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.4.2_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.4.3_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.4.2**
+**Version 1.4.3**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.4.2_x64.exe` | `baf3e2e370a973e6861def689133851a1324aee16f46eac5d68493f45ba5d062` |
-| `HK_IP_Camera_Settings_Portable_1.4.2_x64.zip` | `b5dc0408ce6e42395da78a6beb87dfeccb7452665c8280bf9401e0829ba1fb72` |
+| `HK_IP_Camera_Settings_Setup_1.4.3_x64.exe` | `d255de1f7c1be735f9eddec168eaf9646b8d0317a60998383c9582c200876a11` |
+| `HK_IP_Camera_Settings_Portable_1.4.3_x64.zip` | `c46d29568c8050e6575bce8a28fc6e9cd969b632e315a50b544abb7fce2a11b5` |
 
 ---
 
@@ -176,6 +177,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.4.2_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.4.3** | **Fixes:** Excel export and snapshot folder now work even when Windows cannot open its file dialog ("Unspecified error"). *Sync PC Time* now reads the clock back several times, retries once and shows the real reason when a camera keeps its old time. |
 | **1.4.2** | Native 64-bit program and 64-bit installer, portable x64 package. |
 | **1.4.1** | Traffic (ITC) cameras recognised; *Sync PC Time* now verifies the result and explains NTP cameras; new fields: time zone, NTP enabled / server / tolerance. |
 | **1.4.0** | New name *HK's IP Camera Settings*; persistent log file; live device clock; *Sync PC Time*; Settings page; per-row *Open*; modern scrollbars; animated dark mode. |
