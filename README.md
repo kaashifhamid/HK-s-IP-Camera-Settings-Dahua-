@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.5.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.6.2**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.5.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.5.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.6.2_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.6.2_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -42,8 +42,9 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 ## ✨ What it does
 
 **1. Finds the cameras on the right network**
-- Lists every network adapter of your PC (name, IP address, subnet mask, scan range) and scans **only the networks you tick**.
-- Virtual / VPN adapters are unticked by default. Very large networks are narrowed automatically to keep the scan fast; you can add extra ranges manually.
+- Lists every network adapter of your PC (name, IP address, subnet mask, **start IP and end IP** of the scan range, type) and scans **only the networks you tick**.
+- Start IP and End IP show the range that will be scanned (read-only). To scan a custom range, add it under **Extra ranges** in **⚙ Settings**, for example `192.168.1.50-192.168.1.120`.
+- Virtual / VPN adapters are unticked by default. Very large networks are narrowed automatically to keep the scan fast; you can add extra ranges (and change the scanned ports) under **⚙ Settings**.
 
 **2. One login for all cameras**
 - Enter the username and password once – the app logs in to all devices found.
@@ -58,12 +59,12 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 | Group | Fields |
 |---|---|
 | Identity | Camera name, device name, model, device class, serial number, firmware version, build date, hardware version, vendor |
-| Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on |
+| Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on, **SNMP v3** (Yes / No / Unknown – whether the camera offers SNMP v3, not whether it is enabled; *No* = the camera's firmware has no SNMP section) |
 | Streams | **Main + Sub 1–3:** resolution, FPS, bitrate, codec, bitrate mode, GOP, profile |
 | Image | **WDR mode and WDR % (day / night)**, smart codec, day/night mode, exposure mode, anti-flicker, brightness, contrast, saturation |
 | Clock | **Live device date & time**, difference to your PC, time zone, NTP on/off, NTP server, NTP tolerance |
 
-**5. Time sync** – one click sets the clock of all ticked cameras to your PC time and **verifies** the result. Cameras that keep a wrong time (for example because NTP is enabled) are reported with the reason.
+**5. Time sync** – one click sets the clock of all ticked cameras to your PC time and **verifies** the result. Tick **Also set time zone** next to the button to set each camera's time zone to your PC's as well (read back to confirm; the old and new zone are logged). Cameras that keep a wrong time (for example because NTP is enabled) are reported with the reason.
 
 **6. Snapshots** – tick the cameras and click **Snapshot**. Every camera saves a JPEG with the **camera name in the bottom-right corner**, named like `2026-10-09 095822 AK0B69APAG01456.jpg` (date, time, serial number).
 
@@ -79,7 +80,11 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 - **Undo last change** restores the previous values.
 
 **11. Comfort**
-- **Settings page** to choose which fields are shown in the table.
+- **Settings page** to choose which fields are shown in the table, and to set **extra scan ranges** and **ports**.
+- A clean layout with the adapters in an evenly spaced table, username and password on one line next to the scan buttons, larger entry fields and rows, and only **Scan + Fetch** highlighted.
+- **Filter box** above the device table to find cameras by IP, model, name or status. Hidden rows are never ticked or used by actions.
+- **Collapsible log** at the bottom (click **Expand**); everything is still saved to the log file.
+- The device table has the **Status** and **Web** columns at the end.
 - **Dark mode** with an animated switch.
 - Tick boxes with *Select all / Deselect all*, resizable columns, centered table.
 - **Everything is logged** to a daily log file, also after the app is closed – including every failed request with the camera's reply, a session ID, information about the PC, and a crash log. A **diagnostic bundle** (logs + settings + PC information, no passwords) can be saved from *Settings* in one click, and *Detailed logging* can record every request when a problem is being investigated.
@@ -94,7 +99,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 Switch between the two with the sun / moon switch in the top-right corner of the window.
 
-**Settings page** – choose which fields are shown in the device table, whether the Excel export uses only the visible fields, and where snapshots are saved:
+**Settings page** – choose which fields are shown in the device table, whether the Excel export uses only the visible fields, where snapshots are saved, and the extra scan ranges and ports:
 
 <p align="center">
   <img src="docs/screenshots/settings.png" alt="Settings page" width="800">
@@ -106,7 +111,7 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 
 1. **Install** (or unzip the portable version) and start **HK's IP Camera Settings**.
 2. In **① Network adapters**, tick the adapter that is connected to your camera network.
-3. In **② Scan & login settings**, enter the camera **username** and **password**. The default ports `80, 8080, 443` fit most cameras.
+3. In **② Scan & login settings**, enter the camera **username** and **password**. The default ports `80, 8080, 443` fit most cameras; change them (or add extra ranges) in **⚙ Settings**.
 4. Click **Scan + Fetch**. The cameras appear in the table (green = verified IP camera, red = needs attention – click the row for the reason).
 5. Use the toolbar:
 
@@ -117,7 +122,7 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 | **Scan + Fetch** | Both steps in one go |
 | **📷 Snapshot** | Saves a JPEG of every ticked camera |
 | **🌐 Open Web** | Opens the web pages of the ticked / selected cameras |
-| **🕒 Sync PC Time** | Sets the ticked cameras' clock to your PC time |
+| **🕒 Sync PC Time** | Sets the ticked cameras' clock to your PC time (tick **Also set time zone** to set the time zone too) |
 | **Export Excel** | Saves the ticked cameras to an `.xlsx` file |
 | **Edit Camera...** | Changes the camera name and device name of one camera |
 | **Stream Settings...** | Changes resolution, FPS, bitrate, codec, CBR/VBR and GOP of the main / sub streams of the ticked cameras (with preview and undo) |
@@ -147,7 +152,7 @@ The installer's uninstaller **keeps** your logs and settings.
 
 - The program talks **only to the cameras on your own network**. It sends no data to the internet and has no telemetry.
 - The **password is never saved** – not in the settings file and not in the log.
-- The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
+- The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock and, if ticked, its time zone), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
 - Logs and diagnostic bundles contain device information (IP, model, serial number, firmware) but **never passwords**. Keep that in mind before sharing them.
 
 ---
@@ -158,9 +163,12 @@ The installer's uninstaller **keeps** your logs and settings.
 |---|---|
 | A camera shows **Login failed – Wrong username/password** | That camera uses a different password. Tick only that camera, enter its credentials and click **Login & Fetch**. |
 | A camera shows **Access refused (HTTP 403)** | The account is most likely **locked** after failed logins. Wait about 30 minutes or restart the camera, then try again. |
-| No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges*), and the ports match the cameras' HTTP port. |
+| No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges* in **⚙ Settings**), and the ports match the cameras' HTTP port. |
+| **SNMP v3** shows *No* | The camera's firmware has no SNMP section (the camera answers "Bad Request"). Some models can get a custom firmware with SNMP. |
+| **SNMP v3** shows *Unknown* | The camera did not answer the SNMP request or returned something unexpected. Open the log, find the line `SNMP v3 check <ip>` and send it with the camera model so the detection can be extended. |
 | A device is missing from the table | NVRs/DVRs and non-Dahua devices are not listed as cameras. They appear with the reason in the Excel *Scan Info* sheet. |
 | *Sync PC Time*: **clock still off** | The camera accepted the new time but its clock did not move. The message in the log tells the likely reason: **NTP enabled** on the camera (check the NTP server / time zone), or the camera is kept in time by an **NVR / recorder** (check the NVR's time-sync option). Run *Sync PC Time* again for those cameras. |
+| *Sync PC Time* with **Also set time zone**: "time zone not available" / "not changed" | The PC's UTC offset is not in the camera's time zone list, or the camera kept its old zone. Set it in the camera's web page. Daylight-saving changes are not handled by the camera setting. |
 | *Stream Settings*: a value is marked red or "adjusted" | Red = the camera does not support that value (resolution list, maximum FPS and bitrate range are checked per camera) – the reason is shown. "Adjusted" = the camera accepted the change but stored a different value; the table shows what it kept. Cameras recorded by an NVR may be controlled by the NVR – try one camera first. |
 | Excel export or the snapshot folder window does not open | Some PCs cannot show the standard Windows file dialog. The app then uses its own dialog, or saves automatically to `Documents\HK IP Camera Settings` (Excel) or the snapshot folder from *Settings*, and says so in the log. |
 | Snapshot has a different size than the main stream | The snapshot comes from the camera's snapshot function; some models use another resolution. |
@@ -173,15 +181,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.5.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.6.2_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.5.0**
+**Version 1.6.2**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.5.0_x64.exe` | `8e87380840384528c3d0f87a4faaa9011a64644bb5d16d07f4c416692826468a` |
-| `HK_IP_Camera_Settings_Portable_1.5.0_x64.zip` | `54d1622c593eafcb43e7fe6a3697c115815d813b22efc76fa4131e6f8c951aa9` |
+| `HK_IP_Camera_Settings_Setup_1.6.2_x64.exe` | `4d7fd4321186c4cd99f1f1ce82ddc50ae16b4b540f0f89100d509019f2a81463` |
+| `HK_IP_Camera_Settings_Portable_1.6.2_x64.zip` | `f4273281c52234d25d7dc4c812ca4b75a4f365ec19c419a93720328042e4f24c` |
 
 ---
 
@@ -189,6 +197,10 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.5.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.6.2** | **Fix:** *SNMP v3* now shows **No** for cameras whose firmware has no SNMP (they answer "Bad Request" for it) instead of *Unknown*; *Unknown* is kept for cameras that do not answer. Checked against logs from 7 camera models. |
+| **1.6.1** | **New:** column **SNMP v3** (Yes / No / Unknown: does the camera offer SNMP v3; the raw SNMP reply is written to the log for checking). **Change:** Start IP / End IP are read-only table columns (custom ranges via *Extra ranges* in Settings). |
+| **1.6.0** | **New look:** network adapters in a full-width, evenly spaced table with **Start IP / End IP**; username, password and scan buttons on one line; buttons grouped by purpose; larger entry fields and table rows; **filter box** for the device table; collapsible log. |
+| **1.5.1** | **Layout:** network adapters and scan & login side by side, Notes column removed, larger device table, **Status** and **Web** columns moved to the end, extra ranges and ports moved to **⚙ Settings**. **New:** *Sync PC Time* can also set the camera's **time zone** (option next to the button, verified by read-back). |
 | **1.5.0** | **New:** edit a camera's name and device name; **bulk stream settings** (resolution, FPS, bitrate, codec, CBR/VBR, GOP for main and sub streams) with capability check, preview, read-back and undo; **more detailed logs** (failed requests with the camera's reply, session ID, PC information, crash log, optional full request trace) and a one-click **diagnostic bundle**. |
 | **1.4.3** | **Fixes:** Excel export and snapshot folder now work even when Windows cannot open its file dialog ("Unspecified error"). *Sync PC Time* now reads the clock back several times, retries once and shows the real reason when a camera keeps its old time. |
 | **1.4.2** | Native 64-bit program and 64-bit installer, portable x64 package. |
