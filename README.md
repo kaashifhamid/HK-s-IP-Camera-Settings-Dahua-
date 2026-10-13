@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.6.2**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.7.1**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.6.2_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.6.2_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.7.1_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.7.1_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -51,14 +51,17 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 - **Lockout protection:** a camera that rejected the password is not tried again with the same credentials, so a typo cannot lock your cameras.
 - Different password on one camera? Tick just that camera, enter its password and fetch again.
 
-**3. Only real Dahua IP cameras are listed**
-- Every device is verified after login. Cameras (fixed, dome, PTZ, thermal and traffic/ITC) are shown; NVRs/DVRs and other brands are kept out of the results and listed with the reason in the Excel *Scan Info* sheet.
+**3. Details before login, and only cameras in the table**
+- **Scan** also uses Dahua's own network search (the same method as Dahua's search tools). Without any password, every device that answers shows its **model, serial number, firmware version, MAC address, device name and class** right after the scan.
+- Only cameras (fixed, dome, PTZ, thermal and traffic/ITC) are shown. NVRs/DVRs, switches, door stations, access controllers and other brands are **hidden from the table**, whether they were recognised by the search or after login. They are listed with the reason in the Excel *Scan Info* sheet and the log.
+- Devices that rejected the password stay in the table, with their details, so you can enter their own password and fetch again.
+- Devices found by the network search outside the scanned range (for example a camera left on a wrong subnet) are shown and marked *other subnet*.
 
 **4. Detailed camera information**
 
 | Group | Fields |
 |---|---|
-| Identity | Camera name, device name, model, device class, serial number, firmware version, build date, hardware version, vendor |
+| Identity | Camera name, device name, model, device class, serial number, firmware version, build date, hardware version, **SD card slots** (optional column, switch it on in Settings), vendor |
 | Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on, **SNMP v3** (Yes / No / Unknown – whether the camera offers SNMP v3, not whether it is enabled; *No* = the camera's firmware has no SNMP section) |
 | Streams | **Main + Sub 1–3:** resolution, FPS, bitrate, codec, bitrate mode, GOP, profile |
 | Image | **WDR mode and WDR % (day / night)**, smart codec, day/night mode, exposure mode, anti-flicker, brightness, contrast, saturation |
@@ -112,12 +115,12 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 1. **Install** (or unzip the portable version) and start **HK's IP Camera Settings**.
 2. In **① Network adapters**, tick the adapter that is connected to your camera network.
 3. In **② Scan & login settings**, enter the camera **username** and **password**. The default ports `80, 8080, 443` fit most cameras; change them (or add extra ranges) in **⚙ Settings**.
-4. Click **Scan + Fetch**. The cameras appear in the table (green = verified IP camera, red = needs attention – click the row for the reason).
+4. Click **Scan + Fetch**. The cameras appear in the table (green = verified IP camera, red = needs attention – click the row for the reason; NVRs, switches and other non-camera devices are not shown).
 5. Use the toolbar:
 
 | Button | What it does |
 |---|---|
-| **Scan** | Only searches the network |
+| **Scan** | Searches the network and shows model, serial number, firmware and MAC address of the cameras found (no login) |
 | **Login & Fetch** | Logs in to the ticked devices and reads their details |
 | **Scan + Fetch** | Both steps in one go |
 | **📷 Snapshot** | Saves a JPEG of every ticked camera |
@@ -150,7 +153,7 @@ The installer's uninstaller **keeps** your logs and settings.
 
 ## 🔒 Privacy and safety
 
-- The program talks **only to the cameras on your own network**. It sends no data to the internet and has no telemetry.
+- The program talks **only to the cameras on your own network** (it sends a local search message to find them; it does not leave your network). It sends no data to the internet and has no telemetry.
 - The **password is never saved** – not in the settings file and not in the log.
 - The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock and, if ticked, its time zone), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
 - Logs and diagnostic bundles contain device information (IP, model, serial number, firmware) but **never passwords**. Keep that in mind before sharing them.
@@ -166,7 +169,9 @@ The installer's uninstaller **keeps** your logs and settings.
 | No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges* in **⚙ Settings**), and the ports match the cameras' HTTP port. |
 | **SNMP v3** shows *No* | The camera's firmware has no SNMP section (the camera answers "Bad Request"). Some models can get a custom firmware with SNMP. |
 | **SNMP v3** shows *Unknown* | The camera did not answer the SNMP request or returned something unexpected. Open the log, find the line `SNMP v3 check <ip>` and send it with the camera model so the detection can be extended. |
-| A device is missing from the table | NVRs/DVRs and non-Dahua devices are not listed as cameras. They appear with the reason in the Excel *Scan Info* sheet. |
+| A device is missing from the table | NVRs/DVRs, switches, door stations and non-Dahua devices are not shown as cameras. They appear with the reason in the Excel *Scan Info* sheet and in the log. |
+| Model / serial / firmware are empty after **Scan** | The camera did not answer the network search (Wi-Fi isolation, another subnet, or a firewall that blocks UDP). Windows may ask whether the program may use the network: allow it on **private** networks. Login & Fetch still reads everything with the password. |
+| The program does not open a second window | By design only one window runs at a time; a second start brings the open window to the front. |
 | *Sync PC Time*: **clock still off** | The camera accepted the new time but its clock did not move. The message in the log tells the likely reason: **NTP enabled** on the camera (check the NTP server / time zone), or the camera is kept in time by an **NVR / recorder** (check the NVR's time-sync option). Run *Sync PC Time* again for those cameras. |
 | *Sync PC Time* with **Also set time zone**: "time zone not available" / "not changed" | The PC's UTC offset is not in the camera's time zone list, or the camera kept its old zone. Set it in the camera's web page. Daylight-saving changes are not handled by the camera setting. |
 | *Stream Settings*: a value is marked red or "adjusted" | Red = the camera does not support that value (resolution list, maximum FPS and bitrate range are checked per camera) – the reason is shown. "Adjusted" = the camera accepted the change but stored a different value; the table shows what it kept. Cameras recorded by an NVR may be controlled by the NVR – try one camera first. |
@@ -181,15 +186,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.6.2_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.7.1_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.6.2**
+**Version 1.7.1**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.6.2_x64.exe` | `4d7fd4321186c4cd99f1f1ce82ddc50ae16b4b540f0f89100d509019f2a81463` |
-| `HK_IP_Camera_Settings_Portable_1.6.2_x64.zip` | `f4273281c52234d25d7dc4c812ca4b75a4f365ec19c419a93720328042e4f24c` |
+| `HK_IP_Camera_Settings_Setup_1.7.1_x64.exe` | `a9eaf3d0975786ebac7bb727e044031222feb107d96feaac5d3084b5425afda9` |
+| `HK_IP_Camera_Settings_Portable_1.7.1_x64.zip` | `bbe8a8a0f24150f212e35d53a60695511c171346d778befdeac7e16b8994b858` |
 
 ---
 
@@ -197,6 +202,8 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.6.2_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.7.1** | **New:** optional column **SD Card Slots** (how many memory cards the camera supports; hidden by default, switch it on in **⚙ Settings**). |
+| **1.7.0** | **New:** Scan uses Dahua's network search, so model, serial number, firmware, MAC address, name and class are shown **without a password**; non-camera devices (NVR, switch, door station ...) are **hidden from the table** and listed on the *Scan Info* sheet; cameras on another subnet are marked; *MAC Address* is shown by default. **Faster start:** no slow Windows system query (also stops the messages in `crash.log` on some PCs); **only one window** at a time. |
 | **1.6.2** | **Fix:** *SNMP v3* now shows **No** for cameras whose firmware has no SNMP (they answer "Bad Request" for it) instead of *Unknown*; *Unknown* is kept for cameras that do not answer. Checked against logs from 7 camera models. |
 | **1.6.1** | **New:** column **SNMP v3** (Yes / No / Unknown: does the camera offer SNMP v3; the raw SNMP reply is written to the log for checking). **Change:** Start IP / End IP are read-only table columns (custom ranges via *Extra ranges* in Settings). |
 | **1.6.0** | **New look:** network adapters in a full-width, evenly spaced table with **Start IP / End IP**; username, password and scan buttons on one line; buttons grouped by purpose; larger entry fields and table rows; **filter box** for the device table; collapsible log. |
