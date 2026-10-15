@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.9.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.9.1**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.9.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.9.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.9.1_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.9.1_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -62,7 +62,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 | Group | Fields |
 |---|---|
 | Identity | Camera name, device name, model, device class, serial number, firmware version, build date, hardware version, vendor. Optional columns (switch them on in Settings): **SD card slots**, **processor (SoC)**, **update serial** (firmware family code) |
-| Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on, **SNMP v3** (Yes / No / Unknown – whether the camera offers SNMP v3, not whether it is enabled; *No* = the camera's firmware has no SNMP section) |
+| Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on, **SNMP v3** (Yes / No / Unknown – whether the camera offers SNMP v3, not whether it is enabled; *No* = the camera's firmware has no SNMP section), **P2P Enabled** (Yes / No / Not supported / Unknown – whether the camera's P2P / cloud service is switched on; optional *P2P Online*) |
 | Streams | **Main + Sub 1–3:** resolution, FPS, bitrate, codec, bitrate mode, GOP, profile |
 | Image | **WDR mode and WDR % (day / night)**, smart codec, day/night mode, exposure mode, anti-flicker, brightness, contrast, saturation |
 | Clock | **Live device date & time**, difference to your PC, **Clock Status** (OK / wrong time zone / never set / off by ...), time zone, NTP on/off, NTP server, NTP tolerance |
@@ -171,6 +171,7 @@ The installer's uninstaller **keeps** your logs and settings.
 | No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges* in **⚙ Settings**), and the ports match the cameras' HTTP port. |
 | **SNMP v3** shows *No* | The camera's firmware has no SNMP section (the camera answers "Bad Request"). Some models can get a custom firmware with SNMP. |
 | **SNMP v3** shows *Unknown* | The camera did not answer the SNMP request or returned something unexpected. Open the log, find the line `SNMP v3 check <ip>` and send it with the camera model so the detection can be extended. |
+| **P2P Enabled** shows *Unknown* or *Not supported* | *Not supported* = the camera's firmware has no P2P section. *Unknown* = the camera did not give a usable answer. Open the log, find the lines `P2P check <ip>` and send them with the camera model so the detection can be extended. |
 | A device is missing from the table | NVRs/DVRs, switches, door stations and non-Dahua devices are not shown as cameras. They appear with the reason in the Excel *Scan Info* sheet and in the log. |
 | Model / serial / firmware are empty after **Scan** | The camera did not answer the network search (Wi-Fi isolation, another subnet, or a firewall that blocks UDP). Windows may ask whether the program may use the network: allow it on **private** networks. Login & Fetch still reads everything with the password. |
 | **Clock Status** says *Wrong time zone* | The camera's time itself is right but its zone is not (new cameras often have GMT+08:00). Tick **Also set time zone** and run **Sync PC Time**. |
@@ -189,15 +190,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.9.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.9.1_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.9.0**
+**Version 1.9.1**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.9.0_x64.exe` | `9da2f220188395477bd26151046a9e3b0a8804a65e26915047e002704ffd5932` |
-| `HK_IP_Camera_Settings_Portable_1.9.0_x64.zip` | `f281a0cee5fe368721dbd3834b3f42cd74b0a1b4a87ea7db159f2d15a42948c5` |
+| `HK_IP_Camera_Settings_Setup_1.9.1_x64.exe` | `c4d6e1993816cfc621d9defe16b5942d4ba6be195c8f79d597493695ccb704e9` |
+| `HK_IP_Camera_Settings_Portable_1.9.1_x64.zip` | `d1c1dd301f7d0185ecdd2405fcabbb41a741c6e51899c9d2231e36f78df28cc0` |
 
 ---
 
@@ -205,6 +206,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.9.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.9.1** | **New:** **P2P status** - new column *P2P Enabled* (Yes / No / Not supported / Unknown: is the camera's P2P / cloud service switched on) and optional column *P2P Online*; P2P counts on the Excel *Summary* sheet. Read-only: nothing is changed on the cameras, and the raw P2P reply is written to the log. |
 | **1.9.0** | **New:** networks up to /16 are scanned in full (larger ones are narrowed to the /24 around the PC, now with a visible warning and a *narrowed* mark in the adapter table); **time estimate and confirmation** before long scans; **Stop scan** button. |
 | **1.8.0** | **New:** **Clock Status** column and **Tick clock issues** button; the clock of cameras that reject the password is read without a password (ONVIF); **site name** and a **Summary** sheet in the Excel export; optional columns *Processor (SoC)*, *SNMP Enabled*, *SNMP v3 Enabled* and *Update Serial*. The Excel export now uses the live clock values. |
 | **1.7.1** | **New:** optional column **SD Card Slots** (how many memory cards the camera supports; hidden by default, switch it on in **⚙ Settings**). |
@@ -226,7 +228,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.9.0_x64.exe -Algorithm SHA256
 ### Planned
 
 - ONVIF check (enabled / disabled) per camera
-- View P2P status and enable / disable it in bulk
+- Enable / disable P2P in bulk (the P2P status view is available since 1.9.1)
 - Code-signed installer
 
 ---
