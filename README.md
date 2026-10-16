@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.9.1**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.11.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.9.1_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.9.1_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.11.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.11.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -62,10 +62,10 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 | Group | Fields |
 |---|---|
 | Identity | Camera name, device name, model, device class, serial number, firmware version, build date, hardware version, vendor. Optional columns (switch them on in Settings): **SD card slots**, **processor (SoC)**, **update serial** (firmware family code) |
-| Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on, **SNMP v3** (Yes / No / Unknown – whether the camera offers SNMP v3, not whether it is enabled; *No* = the camera's firmware has no SNMP section), **P2P Enabled** (Yes / No / Not supported / Unknown – whether the camera's P2P / cloud service is switched on; optional *P2P Online*) |
+| Network | IP address, MAC address, DHCP, subnet mask, gateway, network adapter it was found on, **SNMP v3** (Yes / No / Unknown – whether the camera offers SNMP v3, not whether it is enabled; *No* = the camera's firmware has no SNMP section), **P2P Enabled** (Yes / No / Not supported / Unknown – whether the camera's P2P / cloud service is switched on; optional *P2P Server*: the P2P server address stored in the camera), and the optional **SIRA Reference No** (see 12) |
 | Streams | **Main + Sub 1–3:** resolution, FPS, bitrate, codec, bitrate mode, GOP, profile |
 | Image | **WDR mode and WDR % (day / night)**, smart codec, day/night mode, exposure mode, anti-flicker, brightness, contrast, saturation |
-| Clock | **Live device date & time**, difference to your PC, **Clock Status** (OK / wrong time zone / never set / off by ...), time zone, NTP on/off, NTP server, NTP tolerance |
+| Clock | **Live device date & time**, difference to your PC, **Clock Status** (OK / wrong time zone / never set / off by ...), time zone, NTP on/off, NTP server, **NTP port**, NTP tolerance (the NTP server and port columns are optional: *Settings → Show NTP details*, off by default) |
 
 **5. Clock check and time sync** – the **Clock Status** column shows at a glance which cameras have a wrong clock: *Wrong time zone* (the time itself is right), *Zone differs from PC*, *Never set* (factory date) or *Off by ...*. **Tick clock issues** ticks only those cameras, ready for **Sync PC Time**. Cameras that reject the password still show their clock (read without a password through ONVIF), but can only be synchronised after a login. Sync: one click sets the clock of all ticked cameras to your PC time and **verifies** the result. Tick **Also set time zone** next to the button to set each camera's time zone to your PC's as well (read back to confirm; the old and new zone are logged). Cameras that keep a wrong time (for example because NTP is enabled) are reported with the reason.
 
@@ -73,7 +73,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **7. Open web interface** – click **🌐 Open** in any row (or select several cameras and use **Open Web**) to open the camera's own web page in your browser.
 
-**8. Excel export** – a **Summary** sheet (site name, counts of cameras, SNMP v3 Yes/No, NTP off, clock issues, failed logins, and a model table), one row per camera channel, and a *Scan Info* sheet that documents the scan. Enter a **Site name** next to the login fields: it goes into the file name and the Summary. Choose whether to export all fields or only the visible ones.
+**8. Excel export** – a **Summary** sheet (site name, counts of cameras, SNMP v3 Yes/No, P2P, NTP off, clock issues, cameras whose **device name / camera name is still the factory default**, failed logins, and a model table with the **firmware versions and the oldest build per model**), a **Cameras** sheet with one row per camera channel (IP Address and Model are the first two columns and stay frozen while you scroll; the Channel column is hidden - unhide it in Excel if you need it), and a *Scan Info* sheet that documents the scan (devices that were not included are listed with their **model and serial number**). Enter a **Site name** next to the login fields: it goes into the file name and the Summary. Choose whether to export all fields or only the visible ones.
 
 **9. Edit a camera's names** – select one camera and click **Edit Camera...** (or right-click → *Edit camera name...*) to change its **on-screen camera name** and its **device name**. Each change is read back from the camera to confirm it, and the old and new values are written to the log.
 
@@ -82,7 +82,11 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 - After writing, every value is **read back** from the camera; if a camera adjusts a value, you see what it stored instead.
 - **Undo last change** restores the previous values.
 
-**11. Comfort**
+**11. NTP settings in bulk** – tick any number of verified cameras and click **NTP Settings...** to set the **NTP server** and **NTP port** of all of them at once, and (optionally) switch **NTP on** where it is off. Leave the server or port empty to keep each camera's own value. It works like Stream Settings: **Preview** shows what will change per camera, **Apply** writes it and reads every value back to confirm, and **Undo last change** restores the previous values. The time zone is not changed. Cameras whose firmware has no NTP section are listed as not possible.
+
+**12. SIRA reference number (optional)** – *Settings → Show SIRA reference number* adds a **SIRA Reference No** column (and puts it in the Excel file). *Settings → Refresh SIRA list* downloads the Dubai SIRA list (model and reference number) from Dahua, shows the time of the last synchronisation and saves the list on the PC, so the column works **offline** afterwards. Models are compared **without a leading `DH-`** and ignoring capitals (`DH-IPC-HFW3649T-ZS-IL` = `IPC-HFW3649T-ZS-IL`); a model with several references shows all of them. Only exact model matches are used: a variant such as `…-S4` is **not** given the reference of its base model and shows *Not in SIRA list*. If the SIRA address changes or the server does not answer as expected, the old list is kept and the log contains the line `SIRA refresh FAILED` with the address, HTTP status and the start of the reply.
+
+**13. Comfort**
 - **Settings page** to choose which fields are shown in the table, and to set **extra scan ranges** and **ports**.
 - A clean layout with the adapters in an evenly spaced table, username and password on one line next to the scan buttons, larger entry fields and rows, and only **Scan + Fetch** highlighted.
 - **Filter box** above the device table to find cameras by IP, model, name or status. Hidden rows are never ticked or used by actions.
@@ -166,6 +170,8 @@ The installer's uninstaller **keeps** your logs and settings.
 | Problem | What to try |
 |---|---|
 | A camera shows **Login failed – Wrong username/password** | That camera uses a different password. Tick only that camera, enter its credentials and click **Login & Fetch**. |
+| The **SIRA Reference No** column says *SIRA list not loaded* / *Not in SIRA list* | *Not loaded*: open *Settings* and click *Refresh SIRA list* (internet needed once). *Not in SIRA list*: the exact model is not in the list. If *Refresh SIRA list* fails, open the log and send the line `SIRA refresh FAILED`. |
+| A camera shows **Login failed (3 failed logins this session)** | The program counts the wrong logins per camera in this run. From the third wrong login it asks before trying again, because many Dahua cameras lock the account for about 30 minutes after a few wrong passwords. The count starts again when the program is restarted; it does not know about attempts made by other PCs or by the NVR. |
 | A camera shows **Access refused (HTTP 403)** | The account is most likely **locked** after failed logins. Wait about 30 minutes or restart the camera, then try again. |
 | The scan of a large network is slow | A /16 network (65,534 addresses) takes several minutes with three ports. Use **Stop scan** to end it early, remove ports you do not need under **⚙ Settings**, or scan only the ranges you need. |
 | No cameras found | Make sure the right adapter is ticked, the PC and cameras are in the same subnet (or add a range under *Extra ranges* in **⚙ Settings**), and the ports match the cameras' HTTP port. |
@@ -190,15 +196,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.9.1_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.11.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.9.1**
+**Version 1.11.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.9.1_x64.exe` | `c4d6e1993816cfc621d9defe16b5942d4ba6be195c8f79d597493695ccb704e9` |
-| `HK_IP_Camera_Settings_Portable_1.9.1_x64.zip` | `d1c1dd301f7d0185ecdd2405fcabbb41a741c6e51899c9d2231e36f78df28cc0` |
+| `HK_IP_Camera_Settings_Setup_1.11.0_x64.exe` | `1b3de679ace06e8f36c6f6baf9622dd939101c3b54d3305f2684669e85ece333` |
+| `HK_IP_Camera_Settings_Portable_1.11.0_x64.zip` | `97be4eca05c160f3677b740c253dfde9da1315420a4fa985904bfc234241a012` |
 
 ---
 
@@ -206,6 +212,8 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.9.1_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.11.0** | **New:** optional **SIRA Reference No** column with *Refresh SIRA list* in Settings (offline list, `DH-` ignored, failures logged with details); optional **P2P Server** column (*P2P Online* removed - the cameras do not report it); Excel *Summary* counts cameras with a default device name / camera name. **Changed:** in the Excel file Model is column B, columns A-B are frozen, the Channel column is hidden and the Summary model table has no *SNMP v3 No* column; the Settings window keeps its buttons and General box visible on small screens. |
+| **1.10.0** | **New:** **NTP Settings...** - set the NTP server, NTP port and NTP on/off of all ticked cameras at once (preview, read-back check, undo); new *NTP Port* column and a *Show NTP details* option (off by default). **Changed:** Main and Sub1 resolution / FPS / bitrate are switched on once after the update; failed logins show the camera's model and serial number (table, log, Excel *Scan Info*), the wrong logins per camera are counted and the program asks before a further attempt that could lock the account; cameras that simply lack a feature are logged as information instead of warnings; `crash.log` only keeps real crashes; Excel *Summary* shows firmware versions and the oldest build per model; the window can no longer be made narrower than the button bar. |
 | **1.9.1** | **New:** **P2P status** - new column *P2P Enabled* (Yes / No / Not supported / Unknown: is the camera's P2P / cloud service switched on) and optional column *P2P Online*; P2P counts on the Excel *Summary* sheet. Read-only: nothing is changed on the cameras, and the raw P2P reply is written to the log. |
 | **1.9.0** | **New:** networks up to /16 are scanned in full (larger ones are narrowed to the /24 around the PC, now with a visible warning and a *narrowed* mark in the adapter table); **time estimate and confirmation** before long scans; **Stop scan** button. |
 | **1.8.0** | **New:** **Clock Status** column and **Tick clock issues** button; the clock of cameras that reject the password is read without a password (ONVIF); **site name** and a **Summary** sheet in the Excel export; optional columns *Processor (SoC)*, *SNMP Enabled*, *SNMP v3 Enabled* and *Update Serial*. The Excel export now uses the live clock values. |
