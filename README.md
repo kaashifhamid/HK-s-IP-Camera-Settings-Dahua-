@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.11.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.12.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.11.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.11.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.12.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.12.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -73,7 +73,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **7. Open web interface** – click **🌐 Open** in any row (or select several cameras and use **Open Web**) to open the camera's own web page in your browser.
 
-**8. Excel export** – a **Summary** sheet (site name, counts of cameras, SNMP v3 Yes/No, P2P, NTP off, clock issues, cameras whose **device name / camera name is still the factory default**, failed logins, and a model table with the **firmware versions and the oldest build per model**), a **Cameras** sheet with one row per camera channel (IP Address and Model are the first two columns and stay frozen while you scroll; the Channel column is hidden - unhide it in Excel if you need it), and a *Scan Info* sheet that documents the scan (devices that were not included are listed with their **model and serial number**). Enter a **Site name** next to the login fields: it goes into the file name and the Summary. Choose whether to export all fields or only the visible ones.
+**8. Excel export** – a **Summary** sheet (site name, counts of cameras, SNMP v3 Yes/No, P2P, NTP off, clock issues, cameras whose **device name / camera name is still the factory default**, failed logins, and a model table with the **firmware versions and the oldest build per model**), an **Issues** sheet (one line per problem per camera - clock status, NTP switched off, default device / camera name, firmware that differs from the other cameras of the same model, model not in the SIRA list, DHCP on, failed logins - with a suggested action; the matching cells in the Cameras sheet are marked **amber**), a **Cameras** sheet with one row per camera channel (IP Address and Model are the first two columns and stay frozen while you scroll; the Channel column is hidden - unhide it in Excel if you need it), and a *Scan Info* sheet that documents the scan (devices that were not included are listed with their **model and serial number**). Enter a **Site name** next to the login fields: it goes into the file name and the Summary. Choose whether to export all fields or only the visible ones.
 
 **9. Edit a camera's names** – select one camera and click **Edit Camera...** (or right-click → *Edit camera name...*) to change its **on-screen camera name** and its **device name**. Each change is read back from the camera to confirm it, and the old and new values are written to the log.
 
@@ -84,9 +84,13 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **11. NTP settings in bulk** – tick any number of verified cameras and click **NTP Settings...** to set the **NTP server** and **NTP port** of all of them at once, and (optionally) switch **NTP on** where it is off. Leave the server or port empty to keep each camera's own value. It works like Stream Settings: **Preview** shows what will change per camera, **Apply** writes it and reads every value back to confirm, and **Undo last change** restores the previous values. The time zone is not changed. Cameras whose firmware has no NTP section are listed as not possible.
 
-**12. SIRA reference number (optional)** – *Settings → Show SIRA reference number* adds a **SIRA Reference No** column (and puts it in the Excel file). *Settings → Refresh SIRA list* downloads the Dubai SIRA list (model and reference number) from Dahua, shows the time of the last synchronisation and saves the list on the PC, so the column works **offline** afterwards. Models are compared **without a leading `DH-`** and ignoring capitals (`DH-IPC-HFW3649T-ZS-IL` = `IPC-HFW3649T-ZS-IL`); a model with several references shows all of them. Only exact model matches are used: a variant such as `…-S4` is **not** given the reference of its base model and shows *Not in SIRA list*. If the SIRA address changes or the server does not answer as expected, the old list is kept and the log contains the line `SIRA refresh FAILED` with the address, HTTP status and the start of the reply.
+**12. SIRA reference number (optional)** – *Settings → Show SIRA reference number* adds a **SIRA Reference No** column (and puts it in the Excel file). *Settings → Refresh SIRA list* downloads the Dubai SIRA list (model and reference number) from Dahua, shows the time of the last synchronisation and saves the list on the PC, so the column works **offline** afterwards. Models are compared **without a leading `DH-`** and ignoring capitals (`DH-IPC-HFW3649T-ZS-IL` = `IPC-HFW3649T-ZS-IL`); a model with several references shows all of them. Five model families are **built in as the same model** (the SIRA list only has the version with the *P*, for example `IPC-HDBW2231RP-ZS`, while the camera reports `IPC-HDBW2231R-ZS`): `IPC-HDBW2231RP-ZS`/`R-ZS`, `IPC-HDW2239TP-AS-LED-S2`/`T-AS-LED-S2`, `IPC-HFW2239MP-AS-LED-B-S2`/`M-AS-LED-B-S2`, `IPC-HFW3441MP-AS-SFC-I2`/`M-AS-SFC-I2` and `IPC-HDBW4431RP-ZS`/`R-ZS`; with or without `DH-` all four spellings show the same reference (taken from the downloaded list). Apart from these sets, only exact model matches are used: a variant such as `…-S4` is **not** given the reference of its base model and shows *Not in SIRA list*. The list is also **updated automatically in the background every time the program starts** (the window never waits for it; with no internet the saved list is used). *Settings → Update the SIRA list automatically when the app starts* switches this off, and shows the result of the last automatic sync next to the *Refresh SIRA list* button. If the SIRA address changes or the server does not answer as expected, the old list is kept and the log contains the line `SIRA refresh FAILED` with the address, HTTP status and the start of the reply.
 
-**13. Comfort**
+**13. Compare scans** – *Compare Scans...* compares an **earlier Excel file** exported by this program with the scan in the window (or with another Excel file) and lists the cameras that are **new**, **no longer found**, **replaced** (a different device on the same IP address) and **changed**, with what changed (IP address, names, firmware, NTP, P2P, time zone, DHCP, SIRA reference, main / sub stream resolution, FPS, bitrate and codec). Cameras are matched by **serial number**, so a camera that got a new IP address is still the same camera. *Export comparison to Excel...* saves the result. Only fields that exist in both files are compared.
+
+**14. Rename cameras in bulk** – tick cameras and click **Rename Cameras...** (second button row). Either (a) *Save template for the ticked cameras...* writes an Excel file with the current names - edit the yellow **Camera Name** / **Device Name** cells you want to change, save it and click *Load names file...* (a CSV or Excel file with the columns *IP Address* or *Serial Number*, *Channel* for multi-channel devices, *Camera Name* and / or *Device Name* works too; empty cells are left unchanged); or (b) tick *Set the device name = the camera name* to replace device names that are still the default (for example the serial number) with the camera name. **Preview** lists every change, **Apply** writes it and reads each name back to confirm, and **Undo last rename** restores the previous names. The camera name is the title of the video channel; the device name is the name of the device itself.
+
+**15. Comfort**
 - **Settings page** to choose which fields are shown in the table, and to set **extra scan ranges** and **ports**.
 - A clean layout with the adapters in an evenly spaced table, username and password on one line next to the scan buttons, larger entry fields and rows, and only **Scan + Fetch** highlighted.
 - **Filter box** above the device table to find cameras by IP, model, name or status. Hidden rows are never ticked or used by actions.
@@ -158,7 +162,7 @@ The installer's uninstaller **keeps** your logs and settings.
 
 ## 🔒 Privacy and safety
 
-- The program talks **only to the cameras on your own network** (it sends a local search message to find them; it does not leave your network). It sends no data to the internet and has no telemetry.
+- The program talks **only to the cameras on your own network** (it sends a local search message to find them; it does not leave your network). The **only** internet connection it makes is the download of the public SIRA list from Dahua's SIRA server (see 12); nothing about your cameras, network or PC is sent, and it has no telemetry. The automatic SIRA download can be switched off in *Settings*, and the program works fully without internet.
 - The **password is never saved** – not in the settings file and not in the log.
 - The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock and, if ticked, its time zone), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
 - Logs and diagnostic bundles contain device information (IP, model, serial number, firmware) but **never passwords**. Keep that in mind before sharing them.
@@ -170,7 +174,7 @@ The installer's uninstaller **keeps** your logs and settings.
 | Problem | What to try |
 |---|---|
 | A camera shows **Login failed – Wrong username/password** | That camera uses a different password. Tick only that camera, enter its credentials and click **Login & Fetch**. |
-| The **SIRA Reference No** column says *SIRA list not loaded* / *Not in SIRA list* | *Not loaded*: open *Settings* and click *Refresh SIRA list* (internet needed once). *Not in SIRA list*: the exact model is not in the list. If *Refresh SIRA list* fails, open the log and send the line `SIRA refresh FAILED`. |
+| The **SIRA Reference No** column says *SIRA list not loaded* / *Not in SIRA list* | *Not loaded*: open *Settings* and click *Refresh SIRA list* (internet needed; it also happens automatically at every start). *Not in SIRA list*: the exact model is not in the list. If *Refresh SIRA list* fails, open the log and send the line `SIRA refresh FAILED`. |
 | A camera shows **Login failed (3 failed logins this session)** | The program counts the wrong logins per camera in this run. From the third wrong login it asks before trying again, because many Dahua cameras lock the account for about 30 minutes after a few wrong passwords. The count starts again when the program is restarted; it does not know about attempts made by other PCs or by the NVR. |
 | A camera shows **Access refused (HTTP 403)** | The account is most likely **locked** after failed logins. Wait about 30 minutes or restart the camera, then try again. |
 | The scan of a large network is slow | A /16 network (65,534 addresses) takes several minutes with three ports. Use **Stop scan** to end it early, remove ports you do not need under **⚙ Settings**, or scan only the ranges you need. |
@@ -196,15 +200,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.11.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.12.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.11.0**
+**Version 1.12.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.11.0_x64.exe` | `1b3de679ace06e8f36c6f6baf9622dd939101c3b54d3305f2684669e85ece333` |
-| `HK_IP_Camera_Settings_Portable_1.11.0_x64.zip` | `97be4eca05c160f3677b740c253dfde9da1315420a4fa985904bfc234241a012` |
+| `HK_IP_Camera_Settings_Setup_1.12.0_x64.exe` | `5f4b23e8b98f2239152fcac98d82cb7b18436f7a05b7140d7ac0c510a792d5e7` |
+| `HK_IP_Camera_Settings_Portable_1.12.0_x64.zip` | `9543b76f049086e4b34e9da42d1db19977b580a6f3e3dcb99349e055c7775157` |
 
 ---
 
@@ -212,6 +216,9 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.11.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.12.0** | **New:** Excel **Issues** sheet with amber marks in the Cameras sheet; **Compare Scans...** (earlier Excel file against the scan in the window or another file: new / removed / replaced / changed cameras, exportable); **Rename Cameras...** (camera and device names in bulk from an Excel / CSV file or device name = camera name; preview, read-back check, undo). **Changed:** the bulk actions (Stream Settings, NTP Settings, Rename Cameras) are in a second button row; on small screens the window starts maximised. |
+| **1.11.2** | **New:** five model families are built in as "same model" sets for the SIRA reference (with / without `DH-`, with / without the *P*), so all four spellings of each show the same reference. |
+| **1.11.1** | **New:** the SIRA list is updated automatically in the background every time the program starts (never delays the window; a failure keeps the saved list and is logged); *Settings* has a tickbox to switch this off and shows the result of the last automatic sync. |
 | **1.11.0** | **New:** optional **SIRA Reference No** column with *Refresh SIRA list* in Settings (offline list, `DH-` ignored, failures logged with details); optional **P2P Server** column (*P2P Online* removed - the cameras do not report it); Excel *Summary* counts cameras with a default device name / camera name. **Changed:** in the Excel file Model is column B, columns A-B are frozen, the Channel column is hidden and the Summary model table has no *SNMP v3 No* column; the Settings window keeps its buttons and General box visible on small screens. |
 | **1.10.0** | **New:** **NTP Settings...** - set the NTP server, NTP port and NTP on/off of all ticked cameras at once (preview, read-back check, undo); new *NTP Port* column and a *Show NTP details* option (off by default). **Changed:** Main and Sub1 resolution / FPS / bitrate are switched on once after the update; failed logins show the camera's model and serial number (table, log, Excel *Scan Info*), the wrong logins per camera are counted and the program asks before a further attempt that could lock the account; cameras that simply lack a feature are logged as information instead of warnings; `crash.log` only keeps real crashes; Excel *Summary* shows firmware versions and the oldest build per model; the window can no longer be made narrower than the button bar. |
 | **1.9.1** | **New:** **P2P status** - new column *P2P Enabled* (Yes / No / Not supported / Unknown: is the camera's P2P / cloud service switched on) and optional column *P2P Online*; P2P counts on the Excel *Summary* sheet. Read-only: nothing is changed on the cameras, and the raw P2P reply is written to the log. |
