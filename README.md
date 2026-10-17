@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.12.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.13.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.12.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.12.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.13.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.13.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -90,7 +90,9 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **14. Rename cameras in bulk** – tick cameras and click **Rename Cameras...** (second button row). Either (a) *Save template for the ticked cameras...* writes an Excel file with the current names - edit the yellow **Camera Name** / **Device Name** cells you want to change, save it and click *Load names file...* (a CSV or Excel file with the columns *IP Address* or *Serial Number*, *Channel* for multi-channel devices, *Camera Name* and / or *Device Name* works too; empty cells are left unchanged); or (b) tick *Set the device name = the camera name* to replace device names that are still the default (for example the serial number) with the camera name. **Preview** lists every change, **Apply** writes it and reads each name back to confirm, and **Undo last rename** restores the previous names. The camera name is the title of the video channel; the device name is the name of the device itself.
 
-**15. Comfort**
+**15. Security** – (a) **Read-only mode** (switch in the window header): no request that changes a camera is sent, the buttons that change cameras are greyed out and a red banner is shown; the choice is remembered. (b) **Unencrypted logins**: if a camera only accepts plain HTTP with Basic authentication, the password would travel unencrypted - the program asks first (send anyway / skip those cameras / stop). When a camera answers on both HTTP and HTTPS, **HTTPS is used**. The *Login Method* column (Settings → Table columns → Security) shows how each camera was logged in to. (c) **Security checks** in the *Issues* sheet (category *Security*): firmware build older than 24 months, P2P (cloud access) switched on, SSH on, UPnP on, HTTPS off, camera managed over plain HTTP; the read-only columns *SSH Enabled*, *UPnP Enabled* and *HTTPS Enabled* show the values (*Not supported* = the firmware has no such section, *Unknown* = no usable answer; the log lines `SECURITY check` show what the camera answered). (d) **Diagnostic bundle**: *Settings → General → Anonymise the bundle* (on by default) replaces IP addresses (the network structure stays readable), MAC addresses (manufacturer part kept), serial numbers, camera / device names, user names, the Windows user folder, the PC name and the site name in file names. The key to the replacements is saved **next to the bundle** as `…_KEEP-PRIVATE_key.csv` - keep it, do not send it. (e) **Log retention**: *Settings → General → Delete log files older than N days* (default 30; 0 = never). The program never tries default passwords, because that could lock accounts.
+
+**16. Comfort**
 - **Settings page** to choose which fields are shown in the table, and to set **extra scan ranges** and **ports**.
 - A clean layout with the adapters in an evenly spaced table, username and password on one line next to the scan buttons, larger entry fields and rows, and only **Scan + Fetch** highlighted.
 - **Filter box** above the device table to find cameras by IP, model, name or status. Hidden rows are never ticked or used by actions.
@@ -200,15 +202,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.12.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.13.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.12.0**
+**Version 1.13.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.12.0_x64.exe` | `5f4b23e8b98f2239152fcac98d82cb7b18436f7a05b7140d7ac0c510a792d5e7` |
-| `HK_IP_Camera_Settings_Portable_1.12.0_x64.zip` | `9543b76f049086e4b34e9da42d1db19977b580a6f3e3dcb99349e055c7775157` |
+| `HK_IP_Camera_Settings_Setup_1.13.0_x64.exe` | `277e4a028bbb2157857b24c50aaa35f6522e2a71f2f4a6c5a5f0c48d935832fb` |
+| `HK_IP_Camera_Settings_Portable_1.13.0_x64.zip` | `12dca818200487d0d4ea5fce276b9c49e088b3ccb0ce3d07110ae2cc8cf36830` |
 
 ---
 
@@ -216,6 +218,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.12.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.13.0** | **New:** **Read-only mode** (header switch); a warning before a password would be sent unencrypted (plain HTTP + Basic) and HTTPS preferred when available; *Login Method*, *SSH Enabled*, *UPnP Enabled*, *HTTPS Enabled* columns and **Security** checks in the Issues sheet (old firmware build, P2P on, SSH / UPnP on, HTTPS off, plain HTTP); **anonymised diagnostic bundle** with a separate private key file; **log retention** (default 30 days). **Changed:** Settings has two tabs (*Table columns*, *General*). |
 | **1.12.0** | **New:** Excel **Issues** sheet with amber marks in the Cameras sheet; **Compare Scans...** (earlier Excel file against the scan in the window or another file: new / removed / replaced / changed cameras, exportable); **Rename Cameras...** (camera and device names in bulk from an Excel / CSV file or device name = camera name; preview, read-back check, undo). **Changed:** the bulk actions (Stream Settings, NTP Settings, Rename Cameras) are in a second button row; on small screens the window starts maximised. |
 | **1.11.2** | **New:** five model families are built in as "same model" sets for the SIRA reference (with / without `DH-`, with / without the *P*), so all four spellings of each show the same reference. |
 | **1.11.1** | **New:** the SIRA list is updated automatically in the background every time the program starts (never delays the window; a failure keeps the saved list and is logged); *Settings* has a tickbox to switch this off and shows the result of the last automatic sync. |
