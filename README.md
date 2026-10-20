@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.15.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.16.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.15.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.15.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.16.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.16.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -94,7 +94,9 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **16. Upgrade firmware (also in bulk)** – tick cameras and click **Upgrade Firmware...** (second button row). **Choose the firmware file** you downloaded from Dahua (the program never downloads firmware); it shows the size, the **MD5 and SHA-256**, and the version / date found in the file name (for example `…_V2.860.0000000.38.R.251030.bin`); you can enter the **expected MD5** from Dahua's download page - the upgrade is blocked if it does not match. **Check cameras** lists, per camera, the current and the new version and the plan: *Upgrade*, *Skip - already on this version*, *Reinstall* (only if ticked) or *Blocked - older than the camera runs* (only with *Allow downgrades*). To start you must tick the confirmation and **type UPGRADE**. The program then upgrades the **first camera on its own** (recommended) and continues only if it succeeded, then the rest in groups of 1-10 cameras at the same time, and **stops after a chosen number of failures**. For each camera it uploads the file, follows the state and progress, waits for the reboot, logs in again and **confirms the new version**. **Upgrade method:** *Automatic (recommended)* first uses the **web-interface method** (what the camera's own web page does: RPC2 login, `upgrader.consult`, upload to `/RPC2_Upgrade`, `upgrader.getState`) - required by the newer **V3.x firmware generation**, which refuses the upload described in the API document - and falls back to the **API method** (`upgrader.cgi`, spec 4.12) for older cameras; you can also force one of them. The status column shows which method was used (`[RPC2]` / `[CGI]`); the table shows the status per camera and can be saved to Excel. *Stop* does not start new cameras (cameras already installing are never interrupted). It is blocked in read-only mode. **Please note:** Dahua firmware files are named after a platform family, not the exact model, so the program cannot check by name that a file fits a model - you confirm that, and the camera itself refuses a file it cannot use (*Invalid*). An upgrade cannot be undone; going back means upgrading with the older file. Cameras stop recording for several minutes. **Test on one camera first.** The firmware dialog is not modal: you can minimise the program while it runs; the main window's actions are disabled until it finishes, and closing the program asks first.
 
-**17. Comfort**
+**17. LLDP on / off in bulk** – the read-only column **LLDP Enabled** (*Settings → Table columns → Security*; *Yes / No / Not supported / Unknown*) shows whether LLDP (Link Layer Discovery Protocol, which lets network switches see the camera's name, model and port) is switched on. **LLDP Settings...** (second button row) switches LLDP **on or off** for all ticked cameras: **Preview** reads the current value of each camera, **Apply** writes it and reads it back to confirm, **Undo last change** restores the previous values. It uses the camera web page's own method (RPC2 `configManager`, setting `LLDPGlobal`, confirmed on cameras with V2.820, V2.840 and V3.146 firmware) and falls back to the CGI way. Cameras that have no such setting are listed as not possible. Blocked in read-only mode.
+
+**18. Comfort**
 - **Settings page** to choose which fields are shown in the table, and to set **extra scan ranges** and **ports**.
 - A clean layout with the adapters in an evenly spaced table, username and password on one line next to the scan buttons, larger entry fields and rows, and only **Scan + Fetch** highlighted.
 - **Filter box** above the device table to find cameras by IP, model, name or status. Hidden rows are never ticked or used by actions.
@@ -204,15 +206,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.15.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.16.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.15.0**
+**Version 1.16.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.15.0_x64.exe` | `2a8d0a36211d0e2314628c5495c36e2038f624965ceb3529ace2d72d795e1b82` |
-| `HK_IP_Camera_Settings_Portable_1.15.0_x64.zip` | `b2b1cda74f5a449aa2475084f488a595d5751e742f12bfe7a84a532bb60a106a` |
+| `HK_IP_Camera_Settings_Setup_1.16.0_x64.exe` | `db23e0a8a19a68e8c8f18193324c6aa761035e5860e3f52de943b2bc1b758e73` |
+| `HK_IP_Camera_Settings_Portable_1.16.0_x64.zip` | `c34c728be46d88ef852e661ed36d831a815536987f5c5b1dfea676e56e596f2d` |
 
 ---
 
@@ -220,6 +222,8 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.15.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.16.0** | **New:** **LLDP** - column *LLDP Enabled* and **LLDP Settings...** to switch LLDP on or off for the ticked cameras (preview, read-back check, undo). |
+| **1.15.1** | **Changed:** *HTTPS Enabled* shows *Yes* when the program itself is logged in over HTTPS (some firmware has no HTTPS setting section); a device that answers Dahua's network search but not the web login now says so instead of *Unreachable: ReadTimeout*; the firmware plan labels a file with the same version number but a newer / older build date (for example *same version, newer build (2026-07-01 → 2026-07-20)*). |
 | **1.15.0** | **Fixed:** firmware upgrade failed on V3.x cameras (the camera reset the connection) - it now uses the web interface's own method (RPC2), with the API method as fallback and a method choice in the dialog; the program could not be restored after being minimised while a dialog was open (dialogs are no longer modal). **New / changed:** Settings is one page - *General* on the left, *Table columns* on the right as collapsible groups (tick a whole group with its checkbox); the checkbox in the header of the adapter and device tables shows *none / some / all* (☐ / ⊟ / ☑); refreshed look (colours, buttons, table header) in light and dark mode. |
 | **1.14.0** | **New:** **Upgrade Firmware...** - firmware upgrade of the ticked cameras, also in bulk (file checksums, optional expected MD5, plan per camera, typed confirmation, first camera on its own, groups, stop after failures, reboot wait and version check, result table to Excel). |
 | **1.13.1** | **Changed:** in *Settings → General* the *Show SIRA reference number* tickbox is now on the left and *Show NTP server / port columns* on the right. |
