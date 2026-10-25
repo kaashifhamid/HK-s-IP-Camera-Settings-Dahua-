@@ -210,8 +210,8 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.19.0_x64.exe -Algorithm SHA256
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.19.0_x64.exe` | `TO BE FILLED IN (from release\SHA256_1.19.0.txt after the build)` |
-| `HK_IP_Camera_Settings_Portable_1.19.0_x64.zip` | `TO BE FILLED IN (from release\SHA256_1.19.0.txt after the build)` |
+| `HK_IP_Camera_Settings_Setup_1.19.0_x64.exe` | `7d15da9d7a3ed71729917cc16f8ef4ccee855fefe6d985869f7c9201c1a5899b` |
+| `HK_IP_Camera_Settings_Portable_1.19.0_x64.zip` | `2421eedf5a551296b5643f09644fed5631d8fb7798a421f824ccab01edc69ad8` |
 
 ---
 
