@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.18.1**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.19.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.18.1_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.18.1_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.19.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.19.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -87,7 +87,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **13. Compare scans** – *Compare Scans...* compares an **earlier Excel file** exported by this program with the scan in the window (or with another Excel file) and lists the cameras that are **new**, **no longer found**, **replaced** (a different device on the same IP address) and **changed**, with what changed (IP address, names, firmware, NTP, P2P, time zone, DHCP, SIRA reference, main / sub stream resolution, FPS, bitrate and codec). Cameras are matched by **serial number**, so a camera that got a new IP address is still the same camera. *Export comparison to Excel...* saves the result. Only fields that exist in both files are compared.
 
-**14. Rename cameras in bulk** – tick cameras and click **Rename Cameras...** (second button row). Either (a) *Save template for the ticked cameras...* writes an Excel file with the current names - edit the yellow **Camera Name** / **Device Name** cells you want to change, save it and click *Load names file...* (a CSV or Excel file with the columns *IP Address* or *Serial Number*, *Channel* for multi-channel devices, *Camera Name* and / or *Device Name* works too; empty cells are left unchanged); or (b) tick *Set the device name = the camera name* to replace device names that are still the default (for example the serial number) with the camera name. **Preview** lists every change, **Apply** writes it and reads each name back to confirm, and **Undo last rename** restores the previous names. The camera name is the title of the video channel; the device name is the name of the device itself.
+**14. Rename cameras in bulk** – tick cameras and click **Rename Cameras...** (in the **Bulk changes** box). Either (a) *Save template for the ticked cameras...* writes an Excel file with the current names - edit the yellow **Camera Name** / **Device Name** cells you want to change, save it and click *Load names file...* (a CSV or Excel file with the columns *IP Address* or *Serial Number*, *Channel* for multi-channel devices, *Camera Name* and / or *Device Name* works too; empty cells are left unchanged); or (b) tick *Set the device name = the camera name* to replace device names that are still the default (for example the serial number) with the camera name. **Preview** lists every change, **Apply** writes it and reads each name back to confirm, and **Undo last rename** restores the previous names. The camera name is the title of the video channel; the device name is the name of the device itself.
 
 **15. Security** – (a) **Read-only mode** (switch in the window header): no request that changes a camera is sent, the buttons that change cameras are greyed out and a red banner is shown; the choice is remembered. (b) **Unencrypted logins**: if a camera only accepts plain HTTP with Basic authentication, the password would travel unencrypted - the program asks first (send anyway / skip those cameras / stop). When a camera answers on both HTTP and HTTPS, **HTTPS is used**. The *Login Method* column (Settings → Table columns → *Security* group) shows how each camera was logged in to. (c) **Security checks** in the *Issues* sheet (category *Security*): firmware build older than 24 months, P2P (cloud access) switched on, SSH on, UPnP on, HTTPS off, camera managed over plain HTTP; the read-only columns *SSH Enabled*, *UPnP Enabled* and *HTTPS Enabled* show the values (*Not supported* = the firmware has no such section, *Unknown* = no usable answer; the log lines `SECURITY check` show what the camera answered). (d) **Diagnostic bundle**: *Settings → General → Anonymise the bundle* (on by default) replaces IP addresses (the network structure stays readable), MAC addresses (manufacturer part kept), serial numbers, camera / device names, user names, the Windows user folder, the PC name and the site name in file names. The key to the replacements is saved **next to the bundle** as `…_KEEP-PRIVATE_key.csv` - keep it, do not send it. (e) **Log retention**: *Settings → General → Delete log files older than N days* (default 30; 0 = never). The program never tries default passwords, because that could lock accounts.
 
@@ -127,7 +127,7 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 2. In **① Network adapters**, tick the adapter that is connected to your camera network.
 3. In **② Scan & login settings**, enter the camera **username** and **password**. The default ports `80, 8080, 443` fit most cameras; change them (or add extra ranges) in **⚙ Settings**.
 4. Click **Scan + Fetch**. The cameras appear in the table (green = verified IP camera, red = needs attention – click the row for the reason; NVRs, switches and other non-camera devices are not shown).
-5. Use the toolbar:
+5. Use the buttons (the **Scan & login**, **Ticked cameras** and **Bulk changes** boxes at the top):
 
 | Button | What it does |
 |---|---|
@@ -203,15 +203,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.18.1_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.19.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.18.1**
+**Version 1.19.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.18.1_x64.exe` | `c0c8d4155bea7a344ba07fac80f2a707b53bace0d9963fcb6b172035b1f2cd15` |
-| `HK_IP_Camera_Settings_Portable_1.18.1_x64.zip` | `54e1c715584f639792eae20cb5edf7cc675b163fb511f29959b2a182629a4ca0` |
+| `HK_IP_Camera_Settings_Setup_1.19.0_x64.exe` | `TO BE FILLED IN (from release\SHA256_1.19.0.txt after the build)` |
+| `HK_IP_Camera_Settings_Portable_1.19.0_x64.zip` | `TO BE FILLED IN (from release\SHA256_1.19.0.txt after the build)` |
 
 ---
 
@@ -219,6 +219,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.18.1_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.19.0** | **Changed:** more compact top of the window. *Scan & login* is smaller (the *Show* tickbox is replaced by an **eye icon inside the password box**), and the **Ticked cameras** and **Bulk changes** buttons now sit beside it in one row with the network adapters, instead of in two bars; the progress bar and the *Stop scan* button moved to the window header. The *Devices & cameras* table gets the freed space. |
 | **1.18.1** | **Changed:** new app logo and program icon. |
 | **1.18.0** | **Removed:** the firmware upgrade option (button, dialog and all related code). **Changed:** the network adapters table is compact (tick box, adapter, IP address) and sits **beside** the Scan & login section; the Devices & cameras table uses the freed space. |
 | **1.17.0** | **New:** **SSH** on / off in bulk - the LLDP dialog became **LLDP / SSH...**; *SSH Enabled* is now read with the web page's method as well. |
