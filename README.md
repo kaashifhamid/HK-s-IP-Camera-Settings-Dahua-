@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.21.2**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.22.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.21.2_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.21.2_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.22.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.22.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -95,9 +95,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **17. Audio check (microphone and speaker)** – read-only columns in *Settings → Table columns → Audio* (the first three are shown by default on a new installation): **Audio Input (Mic)** (*Yes / No / Unknown* – does the camera report an audio input), **Mic Status** (*On / Off (audio disabled) / Off (volume 0) / n/a*; *Audio on (mic unconfirmed)* when the camera does not say whether it has a microphone), **Speaker Status** (*On / Off (volume 0) / Not supported / Unknown*), plus **Mic Volume** and **Speaker Volume**. *Off (audio disabled)* means audio is switched off in the video stream settings of the camera. The **Issues** sheet of the Excel report lists microphones and speakers that are off (category *Audio*). Note: Dahua cameras report an *audio input*; the camera does not tell in a uniform way whether it is the built-in microphone or an external Line-In, so *Yes* means "has an audio input". Details of what each camera answered are written to the log (lines starting with *AUDIO check*).
 
-**18. Lights check (white / IR light)** – read-only columns in *Settings → Table columns → Lights* (the first three are shown by default on a new installation): **White Light** (*Yes / No / Unknown*), **IR Light**, **Light Type** (*IR only*, *White only (full-colour type)*, *IR + white (dual light)*) and **AI Mix Light** (the camera has the smart IR + white switching function). The data comes from the *Lighting_V2* settings of the camera; a light counts only when the camera lists real settings for it (some cameras, e.g. the DH-IPC-HDW8441X-3D, also list an empty *WhiteLight* entry although no white LED is fitted). Cameras with old firmware that do not have that section (e.g. IPC-HDBW5442E-ZE) are shown as *IR only (old firmware)* when the older *Lighting* setting lists infrared illuminator zones, otherwise as *Unknown*. Note: a camera reports that it has a *white light*, not whether the LED is warm or cool, so a camera with a white light and no IR light is shown as the full-colour type. Whether a light is currently on, off or automatic is not shown, because it can differ per image profile of the camera.
-
-**19. Comfort**
+**18. Comfort**
 - **Settings page** to choose which fields are shown in the table, and to set **extra scan ranges** and **ports**.
 - A clean layout with the compact adapter table **beside** the Scan & login section (username, password, site name and the scan buttons), a large device table, larger entry fields and rows, and only **Scan + Fetch** highlighted.
 - **Filter box** above the device table to find cameras by IP, model, name or status. Hidden rows are never ticked or used by actions.
@@ -207,15 +205,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.21.2_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.22.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.21.2**
+**Version 1.22.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.21.2_x64.exe` | `2d8f5b2402f88ecac16b2a01892c174d94e5eb469f2f8deb8bf2a2e72355437b` |
-| `HK_IP_Camera_Settings_Portable_1.21.2_x64.zip` | `276f9fb61a79b4e23e285e4d1b334bc802a63b4ad57afe9d1f5eedfaf9ab40da` |
+| `HK_IP_Camera_Settings_Setup_1.22.0_x64.exe` | `3b41bac7255288b657f27da181c9e132fcf7d38eadb596189e7e80ab970ff321` |
+| `HK_IP_Camera_Settings_Portable_1.22.0_x64.zip` | `0af119c1a61f23e80729839513c784eb3fb1d493716e93629dda1dd3683d9bda` |
 
 ---
 
@@ -223,6 +221,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.21.2_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.22.0** | **Removed:** the lights check (columns *White Light*, *IR Light*, *Light Type* and *AI Mix Light* and the *Lights* group in Settings > Table columns). |
 | **1.21.2** | **Changed:** cameras with old firmware that only have the old *Lighting* setting (e.g. IPC-HDBW5442E-ZE) are shown as *IR only (old firmware)* instead of *Unknown*. |
 | **1.21.1** | **Fixed:** the lights check showed a white light for cameras that only list an empty white-light entry (e.g. DH-IPC-HDW8441X-3D); they now show *IR only*. |
 | **1.21.0** | **New:** lights check - columns *White Light*, *IR Light*, *Light Type* and *AI Mix Light* (Settings > Table columns > Lights). |
