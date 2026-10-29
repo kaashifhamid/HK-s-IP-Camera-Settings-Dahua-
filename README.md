@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.22.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.23.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.22.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.22.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.23.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.23.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -83,7 +83,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **11. NTP settings in bulk** – tick any number of verified cameras and click **NTP Settings...** to set the **NTP server** and **NTP port** of all of them at once, and (optionally) switch **NTP on** where it is off. Leave the server or port empty to keep each camera's own value. It works like Stream Settings: **Preview** shows what will change per camera, **Apply** writes it and reads every value back to confirm, and **Undo last change** restores the previous values. The time zone is not changed. Cameras whose firmware has no NTP section are listed as not possible.
 
-**12. SIRA reference number (optional)** – *Settings → Show SIRA reference number* adds a **SIRA Reference No** column (and puts it in the Excel file). *Settings → Refresh SIRA list* downloads the Dubai SIRA list (model and reference number) from Dahua, shows the time of the last synchronisation and saves the list on the PC, so the column works **offline** afterwards. Models are compared **without a leading `DH-`** and ignoring capitals (`DH-IPC-HFW3649T-ZS-IL` = `IPC-HFW3649T-ZS-IL`); a model with several references shows all of them. Five model families are **built in as the same model** (the SIRA list only has the version with the *P*, for example `IPC-HDBW2231RP-ZS`, while the camera reports `IPC-HDBW2231R-ZS`): `IPC-HDBW2231RP-ZS`/`R-ZS`, `IPC-HDW2239TP-AS-LED-S2`/`T-AS-LED-S2`, `IPC-HFW2239MP-AS-LED-B-S2`/`M-AS-LED-B-S2`, `IPC-HFW3441MP-AS-SFC-I2`/`M-AS-SFC-I2` and `IPC-HDBW4431RP-ZS`/`R-ZS`; with or without `DH-` all four spellings show the same reference (taken from the downloaded list). Apart from these sets, only exact model matches are used: a variant such as `…-S4` is **not** given the reference of its base model and shows *Not in SIRA list*. The list is also **updated automatically in the background every time the program starts** (the window never waits for it; with no internet the saved list is used). *Settings → Update the SIRA list automatically when the app starts* switches this off, and shows the result of the last automatic sync next to the *Refresh SIRA list* button. If the SIRA address changes or the server does not answer as expected, the old list is kept and the log contains the line `SIRA refresh FAILED` with the address, HTTP status and the start of the reply.
+**12. SIRA reference number (optional)** – *Settings → Show SIRA reference number* adds a **SIRA Reference No** column (and puts it in the Excel file). *Settings → Refresh SIRA list* downloads the Dubai SIRA lists for **IPC and NVR** (model and reference number) from Dahua, shows the time of the last synchronisation and saves the list on the PC, so the column works **offline** afterwards. The NVR list is **stored for now** and is not shown in the Cameras table. Models are compared **without a leading `DH-` or `DHI-`** and ignoring capitals (`DH-IPC-HFW3649T-ZS-IL` = `IPC-HFW3649T-ZS-IL`, `DHI-NVR2216-16P-I2` = `NVR2216-16P-I2`); a model with several references shows all of them. Five model families are **built in as the same model** (the SIRA list only has the version with the *P*, for example `IPC-HDBW2231RP-ZS`, while the camera reports `IPC-HDBW2231R-ZS`): `IPC-HDBW2231RP-ZS`/`R-ZS`, `IPC-HDW2239TP-AS-LED-S2`/`T-AS-LED-S2`, `IPC-HFW2239MP-AS-LED-B-S2`/`M-AS-LED-B-S2`, `IPC-HFW3441MP-AS-SFC-I2`/`M-AS-SFC-I2` and `IPC-HDBW4431RP-ZS`/`R-ZS`; with or without `DH-` all four spellings show the same reference (taken from the downloaded list). Apart from these sets, only exact model matches are used: a variant such as `…-S4` is **not** given the reference of its base model and shows *Not in SIRA list*. The list is also **updated automatically in the background every time the program starts** (the window never waits for it; with no internet the saved list is used). *Settings → Update the SIRA list automatically when the app starts* switches this off, and shows the result of the last automatic sync next to the *Refresh SIRA list* button. Each of the two lists (IPC, NVR) is refreshed on its own: a list that cannot be downloaded keeps its **last successful download** and the other one is still updated (a message says which one was kept). If the SIRA address changes or the server does not answer as expected, the old list is kept and the log contains the line `SIRA refresh FAILED` with the address, HTTP status and the start of the reply.
 
 **13. Compare scans** – *Compare Scans...* compares an **earlier Excel file** exported by this program with the scan in the window (or with another Excel file) and lists the cameras that are **new**, **no longer found**, **replaced** (a different device on the same IP address) and **changed**, with what changed (IP address, names, firmware, NTP, P2P, time zone, DHCP, SIRA reference, main / sub stream resolution, FPS, bitrate and codec). Cameras are matched by **serial number**, so a camera that got a new IP address is still the same camera. *Export comparison to Excel...* saves the result. Only fields that exist in both files are compared.
 
@@ -205,15 +205,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.22.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.23.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.22.0**
+**Version 1.23.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.22.0_x64.exe` | `3b41bac7255288b657f27da181c9e132fcf7d38eadb596189e7e80ab970ff321` |
-| `HK_IP_Camera_Settings_Portable_1.22.0_x64.zip` | `0af119c1a61f23e80729839513c784eb3fb1d493716e93629dda1dd3683d9bda` |
+| `HK_IP_Camera_Settings_Setup_1.23.0_x64.exe` | `1e5282ba605cef9787e3297a740dc1921d3f3908945c9904919e8b08a9ed0d7f` |
+| `HK_IP_Camera_Settings_Portable_1.23.0_x64.zip` | `41375aa0512e83343dbc36dd2f261a72255270791e81931a2f7096c8fb17915d` |
 
 ---
 
@@ -221,6 +221,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.22.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.23.0** | **New:** the **NVR SIRA list** is downloaded together with the IPC list and stored (not shown in the table yet); `DHI-` is ignored like `DH-` when comparing models (`DHI-NVR2216-16P-I2` = `NVR2216-16P-I2`); each list keeps its last successful download when it cannot be refreshed; the SIRA requests use the form-urlencoded Content-Type of the SIRA web page (the old type is tried if that is refused). |
 | **1.22.0** | **Removed:** the lights check (columns *White Light*, *IR Light*, *Light Type* and *AI Mix Light* and the *Lights* group in Settings > Table columns). |
 | **1.21.2** | **Changed:** cameras with old firmware that only have the old *Lighting* setting (e.g. IPC-HDBW5442E-ZE) are shown as *IR only (old firmware)* instead of *Unknown*. |
 | **1.21.1** | **Fixed:** the lights check showed a white light for cameras that only list an empty white-light entry (e.g. DH-IPC-HDW8441X-3D); they now show *IR only*. |
