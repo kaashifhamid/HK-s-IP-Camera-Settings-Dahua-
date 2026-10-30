@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.23.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.24.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.23.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.23.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.24.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.24.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -146,7 +146,7 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 
 **Tips**
 - Tick boxes decide what is exported, photographed or synchronised.
-- Double-click a row or click **🌐 Open** to open that camera's web page.
+- **Double-click a cell** to copy only that cell's text to the clipboard (for example a model, serial number or MAC address); the copied text is shown under the table. *Settings → Double-click a cell copies its text* switches this off, and then a double-click opens the camera's web page as before. Click **🌐 Open**, the *Web* column or right-click → *Open web interface* to open the web page at any time.
 - Drag the column borders to resize columns; open **⚙ Settings** to hide fields you don't need.
 
 ---
@@ -205,15 +205,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.23.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.24.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.23.0**
+**Version 1.24.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.23.0_x64.exe` | `1e5282ba605cef9787e3297a740dc1921d3f3908945c9904919e8b08a9ed0d7f` |
-| `HK_IP_Camera_Settings_Portable_1.23.0_x64.zip` | `41375aa0512e83343dbc36dd2f261a72255270791e81931a2f7096c8fb17915d` |
+| `HK_IP_Camera_Settings_Setup_1.24.0_x64.exe` | `07e2d25af244273562e310ac19d8f7e4284ee52a5cbcc4f6c4002117bf3876cd` |
+| `HK_IP_Camera_Settings_Portable_1.24.0_x64.zip` | `6e564cd8f12b5046bbecefc86aacdb70b84bf229dec5c2987594a24061e5d323` |
 
 ---
 
@@ -221,6 +221,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.23.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.24.0** | **New:** double-click a cell copies only that cell's text to the clipboard (*Settings → Double-click a cell copies its text*, on by default; off = a double-click opens the web page as before). |
 | **1.23.0** | **New:** the **NVR SIRA list** is downloaded together with the IPC list and stored (not shown in the table yet); `DHI-` is ignored like `DH-` when comparing models (`DHI-NVR2216-16P-I2` = `NVR2216-16P-I2`); each list keeps its last successful download when it cannot be refreshed; the SIRA requests use the form-urlencoded Content-Type of the SIRA web page (the old type is tried if that is refused). |
 | **1.22.0** | **Removed:** the lights check (columns *White Light*, *IR Light*, *Light Type* and *AI Mix Light* and the *Lights* group in Settings > Table columns). |
 | **1.21.2** | **Changed:** cameras with old firmware that only have the old *Lighting* setting (e.g. IPC-HDBW5442E-ZE) are shown as *IR only (old firmware)* instead of *Unknown*. |
