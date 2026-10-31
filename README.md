@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.24.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.25.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.24.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.24.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.25.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.25.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -105,6 +105,8 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 - Tick boxes with *Select all / Deselect all*, resizable columns, centered table.
 - **Everything is logged** to a daily log file, also after the app is closed – including every failed request with the camera's reply, a session ID, information about the PC, and a crash log. A **diagnostic bundle** (logs + settings + PC information, no passwords) can be saved from *Settings* in one click, and *Detailed logging* can record every request when a problem is being investigated.
 
+**19. Update check (optional, off by default)** - *Settings → General → Updates → Check for a new version when the app starts*. When switched on, the program asks GitHub **once at start** (in the background, the window never waits for it) for the latest published version. If it is newer than the one you run, a small **↑ v1.xx.x available** link appears in the window header (click it to open the download page) and the version is also shown in the window title and the log. **Check now** in the same place does the check on request, even when the automatic check is off, and shows the result under the button. Nothing is downloaded or installed by the program - you install the new version yourself from the Releases page. If the check fails (no internet, GitHub busy), nothing is shown except a line in the log and the text under *Check now*.
+
 ---
 
 ## 🖼️ Screenshots
@@ -167,7 +169,7 @@ The installer's uninstaller **keeps** your logs and settings.
 
 ## 🔒 Privacy and safety
 
-- The program talks **only to the cameras on your own network** (it sends a local search message to find them; it does not leave your network). The **only** internet connection it makes is the download of the public SIRA list from Dahua's SIRA server (see 12); nothing about your cameras, network or PC is sent, and it has no telemetry. The automatic SIRA download can be switched off in *Settings*, and the program works fully without internet.
+- The program talks **only to the cameras on your own network** (it sends a local search message to find them; it does not leave your network). It makes **two** kinds of internet connection, and nothing else: (1) the download of the public SIRA list from Dahua's SIRA server (see 12), and (2) the **optional, off-by-default update check** (see 19), a single request to GitHub for the latest published version. Nothing about your cameras, network or PC is sent in either, and the program has no telemetry. As with any website you visit, the server sees the public IP address of your connection, and the update request also carries the program name and version number. The automatic SIRA download and the update check can each be switched off in *Settings*, and the program works fully without internet.
 - The **password is never saved** – not in the settings file and not in the log.
 - The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock and, if ticked, its time zone), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
 - Logs and diagnostic bundles contain device information (IP, model, serial number, firmware) but **never passwords**. Keep that in mind before sharing them.
@@ -196,6 +198,7 @@ The installer's uninstaller **keeps** your logs and settings.
 | *Stream Settings*: a value is marked red or "adjusted" | Red = the camera does not support that value (resolution list, maximum FPS and bitrate range are checked per camera) – the reason is shown. "Adjusted" = the camera accepted the change but stored a different value; the table shows what it kept. Cameras recorded by an NVR may be controlled by the NVR – try one camera first. |
 | Excel export or the snapshot folder window does not open | Some PCs cannot show the standard Windows file dialog. The app then uses its own dialog, or saves automatically to `Documents\HK IP Camera Settings` (Excel) or the snapshot folder from *Settings*, and says so in the log. |
 | Snapshot has a different size than the main stream | The snapshot comes from the camera's snapshot function; some models use another resolution. |
+| The update check says **Could not check** | *Settings → General → Updates* shows the reason: no internet, a proxy or firewall that blocks github.com, GitHub limiting requests from a shared network (try again later), or no release published yet. The details are in the log (line `Update check failed`). |
 | Windows warns when starting | See [First start: Windows SmartScreen](#first-start-windows-smartscreen). |
 
 ---
@@ -205,15 +208,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.24.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.25.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.24.0**
+**Version 1.25.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.24.0_x64.exe` | `07e2d25af244273562e310ac19d8f7e4284ee52a5cbcc4f6c4002117bf3876cd` |
-| `HK_IP_Camera_Settings_Portable_1.24.0_x64.zip` | `6e564cd8f12b5046bbecefc86aacdb70b84bf229dec5c2987594a24061e5d323` |
+| `HK_IP_Camera_Settings_Setup_1.25.0_x64.exe` | `c75b2303dc1c5af9670bc44fc12896d64c0c6ccf376e56a8496dae5a370abf20` |
+| `HK_IP_Camera_Settings_Portable_1.25.0_x64.zip` | `956a65c4c8a19862caeea486f6664639be0fac2907ddcb4a82c88262c6731787` |
 
 ---
 
@@ -221,6 +224,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.24.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.25.0** | **New:** optional **update check** (*Settings → General → Updates*, off by default): once at start the program asks GitHub for the latest published version and shows a small link in the header (and in the window title) when a newer one exists; **Check now** does it on request. Nothing is downloaded or installed, and nothing about your PC or cameras is sent. |
 | **1.24.0** | **New:** double-click a cell copies only that cell's text to the clipboard (*Settings → Double-click a cell copies its text*, on by default; off = a double-click opens the web page as before). |
 | **1.23.0** | **New:** the **NVR SIRA list** is downloaded together with the IPC list and stored (not shown in the table yet); `DHI-` is ignored like `DH-` when comparing models (`DHI-NVR2216-16P-I2` = `NVR2216-16P-I2`); each list keeps its last successful download when it cannot be refreshed; the SIRA requests use the form-urlencoded Content-Type of the SIRA web page (the old type is tried if that is refused). |
 | **1.22.0** | **Removed:** the lights check (columns *White Light*, *IR Light*, *Light Type* and *AI Mix Light* and the *Lights* group in Settings > Table columns). |
