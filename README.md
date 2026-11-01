@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.25.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.28.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.25.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.25.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.28.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.28.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -107,6 +107,12 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **19. Update check (optional, off by default)** - *Settings → General → Updates → Check for a new version when the app starts*. When switched on, the program asks GitHub **once at start** (in the background, the window never waits for it) for the latest published version. If it is newer than the one you run, a small **↑ v1.xx.x available** link appears in the window header (click it to open the download page) and the version is also shown in the window title and the log. **Check now** in the same place does the check on request, even when the automatic check is off, and shows the result under the button. Nothing is downloaded or installed by the program - you install the new version yourself from the Releases page. If the check fails (no internet, GitHub busy), nothing is shown except a line in the log and the text under *Check now*.
 
+**20. Column presets** - the list **Column preset** (second row above the table) switches the table between saved sets of columns in one click: *Default*, *Audit*, *Network*, *Streams*, *Security*, *Clock* and *Everything*. Each one keeps **Status, Camera Name and Model**. *Settings → Table columns → Preset* has **Save as...**, **Rename** and **Delete** for your own presets (they are saved at once; the built-in ones cannot be changed - save a copy under your own name instead). The list shows **Custom** when the ticked columns match no preset. The Excel export (*only the visible fields*) follows the columns you have chosen.
+
+**21. Copy rows** - **Ctrl+C** copies the **highlighted rows** (or, when none are highlighted, the **ticked** rows) as tab-separated text with a header row, which pastes straight into Excel cells; **Ctrl+A** highlights every row shown. The **right-click menu** also has *Copy selected rows*, *Copy ticked rows*, *Copy all shown rows*, *Copy this column* (one value per line) and **Copy as table (email / Teams)**, which puts a formatted table on the clipboard so it pastes as a real table into an email or a Teams message (Windows; Notepad and Excel get the same data). The copy contains the IP address and the columns you see, in the order shown, the **full** Status text, and only the rows that are shown (rows hidden by the filter are never copied). Right-clicking a row that is already highlighted keeps the whole highlight; *Edit camera name...* needs a single highlighted row.
+
+**22. Retry on timeout and live progress** - while **Login & Fetch** runs, the **Status** column shows what each camera is doing: *Waiting*, *Logging in*, *Reading settings*, *Retrying (1 of 1)*. A **read** that times out or is reset is tried again after a short pause with a longer wait (*Settings → General → Login and fetch → Retries on timeout*: 0, 1 or 2, default 1; 0 = no retry). **Nothing that changes a camera is ever retried, the login call itself is not retried automatically, and a wrong password is never retried**, so the lockout protection is untouched. A camera that does not answer the login in time is shown as **Timed out** (before: *Error*). If some reads still failed after the retry, the camera is shown in **amber** as *OK (n reads timed out - some fields may be empty)* and appears in the Excel **Issues** sheet, so a half-empty row is never mistaken for a complete one. The button **Retry timed-out (n)** above the table reads just these cameras again (not the ones that rejected the password). After two reads in a row fail even after the retry, the program stops retrying for that camera, so one hanging camera cannot slow the whole run down.
+
 ---
 
 ## 🖼️ Screenshots
@@ -149,6 +155,8 @@ Switch between the two with the sun / moon switch in the top-right corner of the
 **Tips**
 - Tick boxes decide what is exported, photographed or synchronised.
 - **Double-click a cell** to copy only that cell's text to the clipboard (for example a model, serial number or MAC address); the copied text is shown under the table. *Settings → Double-click a cell copies its text* switches this off, and then a double-click opens the camera's web page as before. Click **🌐 Open**, the *Web* column or right-click → *Open web interface* to open the web page at any time.
+- **Ctrl+C** copies the highlighted rows (or the ticked rows) for Excel; **Ctrl+A** highlights all rows; **right-click** for *Copy ... rows*, *Copy this column* and *Copy as table (email / Teams)*.
+- **Column preset** (second row above the table) switches the columns between *Audit*, *Network*, *Streams*, *Security*, *Clock* and your own sets.
 - Drag the column borders to resize columns; open **⚙ Settings** to hide fields you don't need.
 
 ---
@@ -199,6 +207,9 @@ The installer's uninstaller **keeps** your logs and settings.
 | Excel export or the snapshot folder window does not open | Some PCs cannot show the standard Windows file dialog. The app then uses its own dialog, or saves automatically to `Documents\HK IP Camera Settings` (Excel) or the snapshot folder from *Settings*, and says so in the log. |
 | Snapshot has a different size than the main stream | The snapshot comes from the camera's snapshot function; some models use another resolution. |
 | The update check says **Could not check** | *Settings → General → Updates* shows the reason: no internet, a proxy or firewall that blocks github.com, GitHub limiting requests from a shared network (try again later), or no release published yet. The details are in the log (line `Update check failed`). |
+| The Status says **Timed out** | The camera did not answer the login in time. It may be busy, restarting, or the network blocks the web port. Click **Retry timed-out** (above the table) after a moment; it reads only those cameras again. |
+| The Status says **OK (n reads timed out - some fields may be empty)** | The camera logged in, but some settings did not arrive even after the retry (amber row). Click **Retry timed-out**; if it happens again, raise *Retries on timeout* in Settings or check the network and the load on the camera. The log names the reads that failed (line `timed out even after the retry`). |
+| **Copy as table** pastes tab-spaced text, not a table | The table format needs Windows and a program that accepts formatted text (Outlook, Teams, Word, Excel). The status line under the table says when the program had to fall back to plain text. |
 | Windows warns when starting | See [First start: Windows SmartScreen](#first-start-windows-smartscreen). |
 
 ---
@@ -208,15 +219,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.25.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.28.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.25.0**
+**Version 1.28.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.25.0_x64.exe` | `c75b2303dc1c5af9670bc44fc12896d64c0c6ccf376e56a8496dae5a370abf20` |
-| `HK_IP_Camera_Settings_Portable_1.25.0_x64.zip` | `956a65c4c8a19862caeea486f6664639be0fac2907ddcb4a82c88262c6731787` |
+| `HK_IP_Camera_Settings_Setup_1.28.0_x64.exe` | `<paste from release\SHA256_1.28.0.txt>` |
+| `HK_IP_Camera_Settings_Portable_1.28.0_x64.zip` | `<paste from release\SHA256_1.28.0.txt>` |
 
 ---
 
@@ -224,6 +235,9 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.25.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.28.0** | **New:** live progress per camera in the Status column during Login & Fetch (*Waiting, Logging in, Reading settings, Retrying*); a read that times out is tried again (*Settings → General → Login and fetch → Retries on timeout*, 0-2, default 1) - never a change to a camera, never the login call, never a wrong password; **Timed out** is now its own result; incomplete readings are shown in amber and in the Issues sheet; button **Retry timed-out (n)**. |
+| **1.27.0** | **New:** **Ctrl+C** copies the highlighted (or ticked) rows as tab-separated text, **Ctrl+A** highlights all rows; right-click: *Copy selected / ticked / all shown rows*, *Copy this column*, **Copy as table (email / Teams)**. **Changed:** right-clicking a highlighted row keeps the whole highlight. |
+| **1.26.0** | **New:** **column presets** - *Default, Audit, Network, Streams, Security, Clock, Everything* and your own (*Settings → Table columns → Preset*: Save as, Rename, Delete); the list is next to the table. |
 | **1.25.0** | **New:** optional **update check** (*Settings → General → Updates*, off by default): once at start the program asks GitHub for the latest published version and shows a small link in the header (and in the window title) when a newer one exists; **Check now** does it on request. Nothing is downloaded or installed, and nothing about your PC or cameras is sent. |
 | **1.24.0** | **New:** double-click a cell copies only that cell's text to the clipboard (*Settings → Double-click a cell copies its text*, on by default; off = a double-click opens the web page as before). |
 | **1.23.0** | **New:** the **NVR SIRA list** is downloaded together with the IPC list and stored (not shown in the table yet); `DHI-` is ignored like `DH-` when comparing models (`DHI-NVR2216-16P-I2` = `NVR2216-16P-I2`); each list keeps its last successful download when it cannot be refreshed; the SIRA requests use the form-urlencoded Content-Type of the SIRA web page (the old type is tried if that is refused). |
